@@ -1,4 +1,4 @@
-import { type } from 'os';
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
@@ -6,24 +6,27 @@ import Login from './Login';
 import Signup from './Signup';
 
 
-
- 
 type AuthStates = {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
-    updateToken: any;
     sessionToken: any;
+    // updateToken: (newToken:string) => void;
     getToken: any;
     setFirstName: (e: any) => any;
     setLastName: (e: any) => any;
     setEmail: (e: any) => any;
     setPassword: (e: any) => any;
 }
+
+type AuthProps = {
+  updateToken: (newToken:string) => void;
+
+}
  
-class Auth extends React.Component< {}, AuthStates> {
-    constructor(props: any) {
+class Auth extends React.Component< AuthProps, AuthStates> {
+    constructor(props: AuthProps) {
         super(props);
         this.state = {
             firstName: "",
@@ -31,7 +34,6 @@ class Auth extends React.Component< {}, AuthStates> {
             email: "",
             password: "",
             sessionToken: "",
-            updateToken: "",
             getToken: '',
             setFirstName: (e:any) => {
               this.setState({
@@ -65,12 +67,12 @@ class Auth extends React.Component< {}, AuthStates> {
                         <Route exaxt path='/user/login'>
                             <Login 
                             email = {this.state.email}
-                            password = {this.state.email}
+                            password = {this.state.password}
                             setEmail = {this.state.setEmail}
                             setPassword = {this.state.setPassword}
                             sessionToken = {this.state.sessionToken}
                             getToken={this.state.getToken}
-                            updateToken = {this.state.updateToken}
+                            updateToken = {this.props.updateToken}
                             />
                         </Route>
                     </Switch>
@@ -88,7 +90,7 @@ class Auth extends React.Component< {}, AuthStates> {
                             setEmail = {this.state.setEmail}
                             setPassword = {this.state.setPassword}
                             sessionToken = {this.state.sessionToken}
-                            updateToken = {this.state.updateToken}
+                            updateToken = {this.props.updateToken}
                             />
                         </Route>
                     </Switch>

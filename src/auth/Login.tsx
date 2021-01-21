@@ -1,10 +1,11 @@
 import React from 'react'
-import {FormControl, InputLabel, Input, FormHelperText, Button, Container} from '@material-ui/core';
+import {FormControl, InputLabel, Input, FormHelperText, Button, Container, Grid} from '@material-ui/core';
+import { NetworkInterfaceInfo } from 'os';
 
 type LoginProps = {
     email: string;
     password: string;
-    updateToken: any;
+    updateToken: (newToken:string) => void;
     sessionToken: any;
     getToken: any;
     setEmail: (e: any) => any;
@@ -45,7 +46,9 @@ class Login extends React.Component<LoginProps, {}> {
                 }
                 return res.json();
             })
-            .then((data) => {this.updateToken(data.sessionToken)
+            .then((data) => {
+                this.updateToken(data.sessionToken)
+                // may insert history here // 
             })
     }
 
@@ -55,7 +58,38 @@ class Login extends React.Component<LoginProps, {}> {
                 
                 <Container maxWidth="sm">
                 <h3>Login</h3>
-                <FormControl onSubmit={this.handleSubmit}>
+                
+                <form onSubmit = {this.handleSubmit}>
+               
+                <label htmlFor="email">Email:</label>
+                <br />
+                <input id="email" 
+                        // aria-describedby="my-helper-text" 
+                        className='email' 
+                        onChange={(e) => this.props.setEmail(e.target.value)} 
+                        value={this.props.email}/>
+
+                <br />
+                <label htmlFor="password">Password:</label>
+                <br />
+                <input id="password" 
+                        // aria-describedby="my-helper-text" 
+                        className='password' 
+                        onChange={(e) => this.props.setPassword(e.target.value)} 
+                        value={this.props.password}/>
+                <br />
+                <input type="submit" value="Submit" />
+                </form> 
+                </Container>
+                
+            </div>
+        );
+    }
+}
+ 
+export default Login;
+
+{/* <FormControl onSubmit={this.handleSubmit}>
                         <InputLabel htmlFor="email">Email Address</InputLabel>
                         <Input 
                         id="email" 
@@ -79,12 +113,4 @@ class Login extends React.Component<LoginProps, {}> {
                         </FormHelperText>
                     </FormControl>
                         <br />
-                        <Button type="submit" variant="contained" color="secondary" >Signup</Button>
-                </Container>
-                
-            </div>
-        );
-    }
-}
- 
-export default Login;
+                        <Button type="submit" variant="contained" color="secondary" >Signup</Button> */}
