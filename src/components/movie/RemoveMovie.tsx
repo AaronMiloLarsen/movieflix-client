@@ -15,7 +15,7 @@ class RemoveMovie extends React.Component<Props, State> {
     }
     render() { 
         return (  
-            <div>AddMovie</div>
+            <div>Remove</div>
         );
     }
 }
