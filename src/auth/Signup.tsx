@@ -1,16 +1,9 @@
 import React from 'react'
+
+import { Redirect } from 'react-router-dom'
+
 import { FormControl, InputLabel, Input, FormHelperText, ThemeProvider, Container, Button } from '@material-ui/core';
 
-
-// const theme = createMuiTheme({
-//     props: {
-//       FormControl,
-//       MuiButtonBase: {
-//         variant: 'filled',
-//         disableRipple: true,
-//       },
-//     },
-//   });
 
 type SignupProps = {
     firstName: string;
@@ -23,19 +16,24 @@ type SignupProps = {
     setLastName: (e: any) => any;
     setEmail: (e: any) => any;
     setPassword: (e: any) => any;
+    redirect: () => void
 }
 
 type SignupStates = {
     updateToken: (newToken: string) => void;
+    redirect: null | string;
 }
 
 
 //fetch then returns object interface
 
-class Signup extends React.Component<SignupProps, SignupStates> {
+class Signup extends React.Component<SignupProps, SignupStates, {redirect: null | string}> {
     constructor(props: SignupProps) {
         super(props);
-       
+        this.state = {
+            updateToken: (any) => any,
+            redirect: null
+        }
     }
 
     handleSubmit = (event: any) => {
@@ -67,11 +65,16 @@ class Signup extends React.Component<SignupProps, SignupStates> {
         .then((data) => {
                 console.log(data)
                 this.props.updateToken(data.sessionToken)
+                this.props.redirect();
+                // this.setState({redirect: '/userhome'})
             })
     };
     
 
     render() {
+        if (this.state.redirect){
+            return <Redirect to = {this.state.redirect} />
+        }
         return (
             <div>
                 <Container maxWidth="sm">

@@ -1,6 +1,7 @@
 import React from 'react'
 import {FormControl, InputLabel, Input, FormHelperText, Button, Container, Grid} from '@material-ui/core';
-import { NetworkInterfaceInfo } from 'os';
+
+import { Redirect, useHistory } from 'react-router-dom'
 
 type LoginProps = {
     email: string;
@@ -10,18 +11,26 @@ type LoginProps = {
     getToken: any;
     setEmail: (e: any) => any;
     setPassword: (e: any) => any;
+    redirect: () => void
+    redirectValue: string
 }
+
  
-class Login extends React.Component<LoginProps, {}> {
+class Login extends React.Component<LoginProps, {redirectValue: null|string} > {
     constructor(props: LoginProps) {
         super(props);
+        this.state = {
+            redirectValue: null
+        }
     }
 
-    updateToken = (newToken: any) => {
-        localStorage.setItem('token', newToken);
-        this.setState({ sessionToken: newToken });
-        console.log(newToken);
-      };
+    // updateToken = (newToken: any) => {
+    //     localStorage.setItem('token', newToken);
+    //     this.setState({ sessionToken: newToken });
+    //     console.log(newToken);
+    //   };
+
+    // history = useHistory()
 
     handleSubmit = (event:any) => {
         event.preventDefault();
@@ -40,19 +49,28 @@ class Login extends React.Component<LoginProps, {}> {
             // .then((res) => res.json())
             .then((res) => {
                 if (res.status === 200) {
-                  alert("Login successful.")
+                  console.log("Login successful.")
                 } else {
-                  alert("Login failed.");
+                  console.log("Login failed.");
                 }
                 return res.json();
             })
             .then((data) => {
-                this.updateToken(data.sessionToken)
-                // may insert history here // 
+                this.props.updateToken(data.sessionToken)
+                // this.props.redirect()
+                console.log(data.sessionToken)
+                this.setState({redirectValue: '/userhome'})
+                // this.props.history.push('/testhome')
             })
     }
 
+
+    
+
     render() { 
+        if (this.state.redirectValue){
+            return <Redirect to = {this.state.redirectValue} />
+        }
         return (
             <div className='center'>
                 
