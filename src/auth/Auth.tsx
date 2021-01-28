@@ -68,7 +68,7 @@ class Auth extends React.Component< AuthProps, AuthStates> {
     render() { 
         return ( 
             <div>
-                <Router>
+                
                     <Switch>
                         <Route exaxt path='/user/login'>
                             <Login 
@@ -100,11 +100,11 @@ class Auth extends React.Component< AuthProps, AuthStates> {
                             sessionToken = {this.state.sessionToken}
                             updateToken = {this.props.updateToken}
                             redirect = {this.props.redirect}
-                            // redirectValue = {this.props.redirectValue}
+                            redirectValue = {this.props.redirectValue}
                             />
                         </Route>
                     </Switch>
-                </Router>
+              
             </div>
         );
     }

@@ -4,6 +4,7 @@ import { Redirect, Switch, Route} from 'react-router-dom'
 import {Container, Button, Grid, CardContent, Card } from '@material-ui/core'
 
 import IndividualMovie from '../movie/IndividualMovie';
+import AddMovie from '../movie/AddMovie';
 
 
 
@@ -17,6 +18,7 @@ type UserHomeStates = {
     movieYear: number,
     movieDuration: number,
     movieDescription: string,
+    addMovie: boolean
     reviewTitle: string,
     reviewEmotion: string,
     reviewAuthor: string,
@@ -24,10 +26,6 @@ type UserHomeStates = {
     commentAuthor: string
     // update these to eventlister instead of any //
     setMovie: (e:any) => void;
-    // setMovieTitle: (e: any) => any;
-    // setMovieYear: (e: any) => any;
-    // setMovieDuration: (e: any) => any;
-    // setMovieDescription: (e: any) => any;
     setReviewTitle: (e: any) => any;
     setReviewEmotion: (e: any) => any;
     setReviewAuthor: (e: any) => any;
@@ -35,17 +33,9 @@ type UserHomeStates = {
     setCommentAuthor: (e: any) => any;
     updateToken: any;
     sessionToken: any;
+    
 
 }
-
-// interface Movie {
-//     movieTitle: string,
-//     movieTitle: string,
-//     movieYear: number,
-//     movieDuration: number,
-//     movieDescription: string,
-
-// }
 
 //TRYING TO SEND MOVIE OBJECT DOWN TO INDIVIDUAL MOVIE TO BE MAPPED //
  
@@ -58,6 +48,7 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
             movieYear: 0,
             movieDuration: 0,
             movieDescription: "",
+            addMovie: false,
             reviewTitle: " ",
             reviewEmotion: " ",
             reviewAuthor: "",
@@ -67,34 +58,8 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
             sessionToken: "",
             setMovie: (e:any) => {
                 this.setState({
-                  movie: e })},
-            //         movieTitle: e,
-            //         movieYear: e,
-            //         movieDuration: e,
-            //         movieDescription: e,
-            //       }
-            //     })
-            // },
-            // setMovieTitle: (e) => {
-            //   this.setState({
-            //     movieTitle: e
-            //   })
-            // },
-            // setMovieYear: (e) => {
-            //   this.setState({
-            //     movieYear: e
-            //   })
-            // },
-            // setMovieDuration: (e) => {
-            //   this.setState({
-            //     movieDuration: e
-            //   })
-            // },
-            // setMovieDescription: (e) => {
-            //   this.setState({
-            //     movieDescription: e
-            //   })
-            // },
+                  movie: e })
+            },
             setReviewTitle: (e) => {
               this.setState({
                 reviewTitle: e
@@ -128,11 +93,10 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
                 method: 'GET',
                 headers: new Headers({
                     'Content-Type': 'application/json',
-                    'Authorization': this.props.sessionToken
+                    'Authorization': localStorage.getItem('token')|| ''
                 })
             }) .then((movie) => movie.json())
                .then((movieData) => {
-                    // this.state.setMovie(movieData)
                     this.setState({
                         movie: movieData
                     })
@@ -143,56 +107,64 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
         }
 
         componentDidMount() {
+            if (localStorage.getItem('token')) {
             this.fetchMovies();
+            }
         }
-
 
         movieMapper = () => {
             return(this.state.movie?.map((movie:any,index:number) => {
                 return (
-                    <>
-                    {/* <IndividualMovie 
-                    movie={this.state.movie},            
-                    key = {movie.id},               
-                    sessionToken = {this.props.sessionToken}  /> */}
-                    <p>Hey hey!</p>
-                    </>
+                    <div key = {movie.id}>
+                    <IndividualMovie 
+                    movie={movie}                          
+                    sessionToken = {this.props.sessionToken}  />
+                    </div>
                 )
             }))
         }
 
-        userHomeStyle =  {
-            root: {
-                display: 'flex',
-                backgroundColor: 'black',
-                width: '80%',
-                height: '80%'
-            }
+        addMovieOn = () => {
+            this.setState({addMovie: true})
         }
+
+        addMovieOff = () => {
+            this.setState({addMovie: false})
+        }
+
+        // userHomeStyle =  {
+        //     root: {
+        //         display: 'flex',
+        //         alignItems: 'center',
+        //         backgroundColor: 'black',
+        //         width: '80%',
+        //         height: '80%'
+        //     }
+        // }
 
 
     render() { 
         return ( 
-            <div style={{minHeight: '1000px'}}>
-
-                        <div style={this.userHomeStyle.root}>
-                            <Grid>
-                                <h3>Welcome User</h3>
-                            {/* NEED HELP WITH MAPPING */}
-                            {/* {this.state.movie.map((movie, i) =>
-                            return ( 
-                                <>
-                                <IndividualMovie 
-                                    movie={this.state.movie},
-                                    key = {i},
-                                    sessionToken = {this.props.sessionToken} />
-                                    </>
-                                    ))} */}
-                                    {this.movieMapper()}
-                                <Button>Post A Movie</Button>
-                            </Grid>
-                        </div>
-            </div>
+            <Grid>
+                
+                <h3>Welcome User</h3>
+                {this.movieMapper()}
+                <br />
+                <br />
+                <br />
+                    <div>
+                        <Button onClick={(e:any)=>this.addMovieOn()}>Post A Movie</Button>
+                    </div>
+                
+                {this.state.addMovie ?
+                    <AddMovie 
+                    sessionToken={this.props.sessionToken}
+                    addMovie={this.state.addMovie}
+                    fetchMovies={this.fetchMovies}
+                    addMovieOff={this.addMovieOff}
+                    /> : <></>
+                }
+            </Grid>
 
             
         );
@@ -200,3 +172,19 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
 }
  
 export default UserHome;
+
+// COMMENT GRAVEYARD // 
+
+// interface Movie {
+//     movieTitle: string,
+//     movieTitle: string,
+//     movieYear: number,
+//     movieDuration: number,
+//     movieDescription: string,
+
+// }
+
+// setMovieTitle: (e: any) => any;
+    // setMovieYear: (e: any) => any;
+    // setMovieDuration: (e: any) => any;
+    // setMovieDescription: (e: any) => any;

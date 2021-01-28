@@ -16,23 +16,24 @@ type SignupProps = {
     setLastName: (e: any) => any;
     setEmail: (e: any) => any;
     setPassword: (e: any) => any;
-    redirect: () => void
+    redirect: () => void;
+    redirectValue: string
 }
 
 type SignupStates = {
     updateToken: (newToken: string) => void;
-    redirect: null | string;
+    redirectValue: null | string;
 }
 
 
 //fetch then returns object interface
 
-class Signup extends React.Component<SignupProps, SignupStates, {redirect: null | string}> {
+class Signup extends React.Component<SignupProps, SignupStates, {redirectValue: null | string}> {
     constructor(props: SignupProps) {
         super(props);
         this.state = {
             updateToken: (any) => any,
-            redirect: null
+            redirectValue: null
         }
     }
 
@@ -65,15 +66,15 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirect: null 
         .then((data) => {
                 console.log(data)
                 this.props.updateToken(data.sessionToken)
-                this.props.redirect();
-                // this.setState({redirect: '/userhome'})
+                // this.props.redirect();
+                this.setState({redirectValue: '/userhome'})
             })
     };
     
 
     render() {
-        if (this.state.redirect){
-            return <Redirect to = {this.state.redirect} />
+        if (this.state.redirectValue){
+            return <Redirect to = {this.state.redirectValue} />
         }
         return (
             <div>

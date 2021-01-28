@@ -1,27 +1,24 @@
 import React from 'react';
 import { Component } from 'react';
 
-import { Card, Button, CardContent, List } from '@material-ui/core';
+import { Switch } from 'react-router-dom'
+import { Card, Button, CardContent, List, Grid } from '@material-ui/core';
 
 
 
 
 
-export interface Props {
-    movie: {
-        movieTitle: "",
-        movieYear: 0,
-        movieDuration: 0,
-        movieDescription: "",
-    },
+type IndividualMovieProps = {
+    movie: any,
+    sessionToken: string
 }
  
 export interface State {
     
 }
  
-class IndividualMovie extends React.Component<Props,{}> {
-    constructor(props: Props) {
+class IndividualMovie extends React.Component<IndividualMovieProps,{}> {
+    constructor(props: IndividualMovieProps) {
         super(props);
         this.state = { };
     }
@@ -30,33 +27,37 @@ class IndividualMovie extends React.Component<Props,{}> {
         root: {
             color: "green",
             backgroundColor: 'black',
-            width: '100px',
+            minWidth: '300px',
             height: '100px',
         }
     }
                 //WANT THIS ELEMENT TO BE MAPPED EVERYTIME FETCHRESULTS / GET ALL MOVIES OCCURS ON USERHOME
     render() { 
         return ( 
-            <div style = {this.style.root}>
-                <Card>
-                    <CardContent>
-                        <h4>Title: {this.props.movie.movieTitle}</h4>
-                    <List>
-                        <li>
-                        Year: {this.props.movie.movieYear}
-                        </li>
-                        <li>
-                            Duration: {this.props.movie.movieDuration}
-                        </li>
-                        <li>
-                            Description: {this.props.movie.movieDescription}
-                        </li>
-                    </List>
-                    </CardContent>
-                </Card>
-                    {/* <Button href={`/review/create/${this.props.movie.movieId}`}>Add Review</Button>
-                    <Button href={`/review/${this.props.movieId}`}>View Reviews</Button> */}
-            </div>
+            <Grid container spacing={2} direction="row" justify="center" alignItems="center">
+                <Grid item xs={3} sm={3}>
+                    <Card>
+                        <CardContent>
+                            <h4>Title: {this.props.movie.title}</h4>
+                        <List>
+                            <li>
+                            Year: {this.props.movie.year}
+                            </li>
+                            <li>
+                                Duration: {this.props.movie.duration}
+                            </li>
+                            <li>
+                                Description: {this.props.movie.description}
+                            </li>
+                        </List>
+                        <Button href='/review/create'>Add Review</Button>
+                        <Button>View Reviews</Button>
+                        </CardContent>
+                    </Card>
+                        
+                </Grid>
+                
+            </Grid>
             
          );
     }
