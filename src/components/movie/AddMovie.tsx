@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel, Modal, } from '@material-ui/core';
-import { truncateSync } from 'fs';
-import { SettingsOutlined } from '@material-ui/icons';
+import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel } from '@material-ui/core';
+
 
 type AddMovieProps = {
     sessionToken: string

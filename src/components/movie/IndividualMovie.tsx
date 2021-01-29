@@ -1,42 +1,63 @@
 import React from 'react';
 import { Component } from 'react';
 
-import { Switch } from 'react-router-dom'
+import { Switch, useParams } from 'react-router-dom'
 import { Card, Button, CardContent, List, Grid } from '@material-ui/core';
 
+import AddReview from '../review/AddReview'
+import ViewReviews from '../review/ViewReviews'
 
 
 
 
 type IndividualMovieProps = {
-    movie: any,
-    sessionToken: string
+    movie: any;
+    sessionToken: string;
+    // fetchMovies: () => void;
 }
  
-export interface State {
-    
+type IndividualMovieStates = {
+    addReview: boolean;
+    viewReviews: boolean;
 }
  
-class IndividualMovie extends React.Component<IndividualMovieProps,{}> {
+class IndividualMovie extends React.Component<IndividualMovieProps,IndividualMovieStates> {
     constructor(props: IndividualMovieProps) {
         super(props);
-        this.state = { };
+        this.state = { 
+            addReview: false,
+            viewReviews: false
+        };
+    }
+
+    addReviewOn = () => {
+        this.setState({addReview: true}) 
+    }
+
+    addReviewOff = () => {
+        this.setState({addReview: false})
+    }
+
+    viewReviewsOn = () => {
+        this.setState({viewReviews: true})
+    }
+
+    viewReviewsOff = () => {
+        this.setState({viewReviews: false})
     }
 
     style = {
         root: {
-            color: "green",
-            backgroundColor: 'black',
-            minWidth: '300px',
-            height: '100px',
+            minWidth: '300px'
         }
     }
-                //WANT THIS ELEMENT TO BE MAPPED EVERYTIME FETCHRESULTS / GET ALL MOVIES OCCURS ON USERHOME
+          
     render() { 
         return ( 
-            <Grid container spacing={2} direction="row" justify="center" alignItems="center">
-                <Grid item xs={3} sm={3}>
-                    <Card>
+            <>
+            <Grid container spacing={3}  justify="center" alignItems="center">
+                <Grid item md={6} sm={1}>
+                    <Card style={this.style.root}>
                         <CardContent>
                             <h4>Title: {this.props.movie.title}</h4>
                         <List>
@@ -50,8 +71,8 @@ class IndividualMovie extends React.Component<IndividualMovieProps,{}> {
                                 Description: {this.props.movie.description}
                             </li>
                         </List>
-                        <Button href='/review/create'>Add Review</Button>
-                        <Button>View Reviews</Button>
+                        <Button onClick={(e:any) => {this.addReviewOn()}}>Add Review</Button>
+                        <Button onClick={(e:any) => {this.viewReviewsOn()}}>View Reviews</Button>
                         </CardContent>
                     </Card>
                         
@@ -59,6 +80,24 @@ class IndividualMovie extends React.Component<IndividualMovieProps,{}> {
                 
             </Grid>
             
+
+            {this.state.addReview ? 
+            <AddReview 
+            sessionToken={this.props.sessionToken} 
+            addReview={this.state.addReview}
+            addReviewOff={this.addReviewOff}
+            movieId={this.props.movie.id} /> : <></>}
+            
+            {this.state.viewReviews ? 
+            <ViewReviews
+            sessionToken={this.props.sessionToken}
+            viewReviewsOff={this.viewReviewsOff}
+            movieId={this.props.movie.id}
+            movieTitle={this.props.movie.title}
+            // fetchMovies = {this.props.fetchMovies} 
+             /> : <></>}
+
+            </>
          );
     }
 

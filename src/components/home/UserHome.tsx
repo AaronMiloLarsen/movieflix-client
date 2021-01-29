@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Switch, Route} from 'react-router-dom'
 
-import {Container, Button, Grid, CardContent, Card } from '@material-ui/core'
+import {Container as Grif, Button, Grid, CardContent, Card } from '@material-ui/core'
 
 import IndividualMovie from '../movie/IndividualMovie';
 import AddMovie from '../movie/AddMovie';
@@ -118,7 +118,9 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
                     <div key = {movie.id}>
                     <IndividualMovie 
                     movie={movie}                          
-                    sessionToken = {this.props.sessionToken}  />
+                    sessionToken = {this.props.sessionToken}
+                    // fetchMovies={this.fetchMovies}  
+                    />
                     </div>
                 )
             }))
@@ -145,17 +147,27 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
 
     render() { 
         return ( 
-            <Grid>
+            <>
                 
-                <h3>Welcome User</h3>
+            <h3>Welcome User</h3>
+                <Grid container
+                    direction="row"
+                    justify="flex-start"
+                    alignItems="center">
                 {this.movieMapper()}
+                </Grid>
                 <br />
                 <br />
                 <br />
                     <div>
-                        <Button onClick={(e:any)=>this.addMovieOn()}>Post A Movie</Button>
+                    <Button variant="outlined" color="secondary" onClick={(e:any)=>this.addMovieOn()}>Post A Movie</Button>
                     </div>
-                
+                    
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    
                 {this.state.addMovie ?
                     <AddMovie 
                     sessionToken={this.props.sessionToken}
@@ -164,9 +176,10 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
                     addMovieOff={this.addMovieOff}
                     /> : <></>
                 }
-            </Grid>
 
             
+
+        </>
         );
     }
 }
