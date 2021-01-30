@@ -1,7 +1,7 @@
 import React from 'react';
-import { Redirect, Switch, Route} from 'react-router-dom'
+// import { Redirect, Switch, Route} from 'react-router-dom'
 
-import {Container as Grif, Button, Grid, CardContent, Card } from '@material-ui/core'
+import {Button, Grid } from '@material-ui/core'
 
 import IndividualMovie from '../movie/IndividualMovie';
 import AddMovie from '../movie/AddMovie';

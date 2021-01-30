@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel, Modal, TextField, } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel, TextField, } from '@material-ui/core';
 
 
 type AddReviewProps = {
@@ -84,8 +84,8 @@ handleSubmit = (e:any) => {
         .then((data) => {
             console.log(data)
             this.state.setTitle('')
-            this.state.setEmotion(0)
-            this.state.setReview(0)
+            this.state.setEmotion('')
+            this.state.setReview('')
             this.state.setAuthor('')
             // this.props.fetchMovies()
             this.handleClose()
@@ -126,7 +126,8 @@ handleSubmit = (e:any) => {
         return (  
 
             <Dialog open={this.state.open} 
-            // style={this.dialogStyle.root}
+            maxWidth='lg'
+            fullWidth
             >
                 <DialogTitle>Add A Review!</DialogTitle>
                 <DialogContent >
@@ -143,10 +144,10 @@ handleSubmit = (e:any) => {
                     </DialogContent>
                     <DialogContent >
                     {/* <FormControl> */}
-                        <InputLabel htmlFor='review'>Review</InputLabel>
+                        {/* <InputLabel htmlFor='review'>Review</InputLabel> */}
                         <TextField 
                         id="standard-multiline-flexible"
-                        // label="Multiline"
+                        label="Review"
                         multiline
                         rowsMax={8}
                         fullWidth

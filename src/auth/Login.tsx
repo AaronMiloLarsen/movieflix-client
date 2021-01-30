@@ -1,7 +1,7 @@
 import React from 'react'
-import {FormControl, InputLabel, Input, FormHelperText, Button, Container, Grid} from '@material-ui/core';
+import {Container} from '@material-ui/core';
 
-import { Redirect, useHistory } from 'react-router-dom'
+import { Redirect, } from 'react-router-dom'
 
 type LoginProps = {
     email: string;

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Redirect } from 'react-router-dom'
 
-import { FormControl, InputLabel, Input, FormHelperText, ThemeProvider, Container, Button } from '@material-ui/core';
+import {Container} from '@material-ui/core';
 
 
 type SignupProps = {

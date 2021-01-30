@@ -1,7 +1,5 @@
 import React from 'react';
-import { Component } from 'react';
 
-import { Switch, useParams } from 'react-router-dom'
 import { Card, Button, CardContent, List, Grid } from '@material-ui/core';
 
 import AddReview from '../review/AddReview'

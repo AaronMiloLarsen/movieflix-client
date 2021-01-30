@@ -1,6 +1,9 @@
 
 import React from 'react';
 
+import AddComment from '../comment/AddComment'
+import ViewComments from '../comment/ViewComments'
+
 import {  Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
@@ -16,7 +19,10 @@ type ViewReviewsProps = {
 
 type ViewReviewsStates = {
     openReviews: boolean;
-    reviews: any
+    reviews: any;
+    addComment: boolean;
+    viewComments: boolean
+    // setReviews: (e:any) => void
 }
  
  
@@ -24,17 +30,25 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
     constructor(props: ViewReviewsProps) {
         super(props);
         this.state = {
-            openReviews: false,
+            openReviews: true,
             reviews: [],
+            addComment: false,
+            viewComments: false,
+            // setReviews: (e:any) => {
+            //     this.setState({
+            //       reviews: e })
+            // },
         };
     }
 
 
-    setReviews = (postArray:[]) => {
-        console.log("postArray: ", postArray)
-        this.setState({reviews: postArray})
-        this.setState({openReviews: true})
-    }
+   
+
+    componentDidMount() {
+        if (localStorage.getItem('token')) {
+            this.fetchReviews();
+            }
+        }
 
     fetchReviews = () => {
         
@@ -47,17 +61,54 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
             })
         }).then((reviews) => reviews.json())
            .then((reviewsData) => {
-                this.setReviews(reviewsData)
+                this.setAllReviews(reviewsData)
                 console.log(reviewsData)
+                // this.setState({openReviews:true})
            }).catch (
                (err) => console.log(err)
            )
     }
 
+    setAllReviews = (allReviews:[]) => {
+        console.log("All Reviews: ", allReviews)
+        this.setState({reviews: allReviews})
+        this.setState({openReviews: true})
+    }
 
-    componentDidMount() {
-        this.fetchReviews()
+
+   
         // console.log(this.state.reviews)
+
+    // reviewMapper = () => {
+    //     this.state.reviews?.map((reviews:any,index:number) => {
+    //         return (
+    //             <div key = {reviews.id}>
+    //             <IndividualReview
+    //             reviews={reviews}                       
+    //             sessionToken = {this.props.sessionToken}
+    //             addCommentOn = {this.addCommentOn}
+    //             // fetchMovies={this.fetchMovies}  
+    //             />
+    //             </div>
+    //         )
+    //     })
+    // }
+    
+
+    addCommentOn = () => {
+        this.setState({addComment: true})
+    }
+
+    addCommentOff = () => {
+        this.setState({addComment: false})
+    }
+
+    viewCommentsOn = () => {
+        this.setState({viewComments: true})
+    }
+
+    viewCommentsOff = () => {
+        this.setState({viewComments: false})
     }
 
     style = {
@@ -71,29 +122,32 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
             width:'200px'
         }
     }
-
+    
     render() { 
+        
         return ( 
             <div>
                 <Dialog open={this.state.openReviews} style={this.style.dialog}>
                 <DialogTitle>
                 Viewing all Reviews for {this.props.movieTitle}
                 </DialogTitle>
-                {this.state.reviews.length > 0 ? (this.state.reviews?.map((event:any, index:any) => (
-                
-                  <DialogContent dividers key={this.state.reviews.id}>
-                    Title: {this.state.reviews[index].title}
-                    <br />
-                    Emotion: {this.state.reviews[index].emotion}
-                    <br />
-                    Review: {this.state.reviews[index].review}
-                    <br />
-                    Author: {this.state.reviews[index].author}
-                    <br/>
-                    <Button>Add Comment</Button>
-                    <Button>View All Comments</Button>
-                  </DialogContent>
-              
+                {/* {this.reviewMapper()} */}
+
+                {this.state.reviews.length > 0 ? (this.state.reviews.map((event:any, index:any) => (
+                <DialogContent dividers 
+                key={this.state.reviews.id}
+                >
+                        Title: {this.state.reviews[index].title}
+                        <br />
+                        Emotion: {this.state.reviews[index].emotion}
+                        <br />
+                        Review: {this.state.reviews[index].review}
+                        <br />
+                        Author: {this.state.reviews[index].author}
+                        <br/>
+                        <Button onClick={this.addCommentOn}>Add Comment</Button>
+                        <Button onClick={this.viewCommentsOn}>View All Comments</Button>
+                </DialogContent>
                 ))
                  ) : (
                     <DialogContent>
@@ -107,6 +161,19 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
                 </DialogActions>
               
                 </Dialog>
+
+                {this.state.addComment ? <AddComment
+                 sessionToken={this.props.sessionToken}
+                 addCommentOff={this.addCommentOff}
+                 reviewId={this.state.reviews.id}
+                 /> : <></>}
+
+                {this.state.viewComments ? <ViewComments
+                 sessionToken={this.props.sessionToken}
+                 viewCommentsOff={this.viewCommentsOff}
+                 reviewId={this.state.reviews.id}
+                 /> : <></>}
+                
             </div>
          );
     }
@@ -116,7 +183,7 @@ export default ViewReviews;
 
 // COMMENT GRAVEYARD //
 
-  {/* <Accordion>
+  /* <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         >
@@ -128,4 +195,17 @@ export default ViewReviews;
                             <Button>Test Button</Button>
                             <Button>Test Button</Button>
                     </AccordionDetails>
-                </Accordion> */}
+                </Accordion> */
+
+                  //   <DialogContent dividers key={this.state.reviews.id}>
+                //     Title: {this.state.reviews[index].title}
+                //     <br />
+                //     Emotion: {this.state.reviews[index].emotion}
+                //     <br />
+                //     Review: {this.state.reviews[index].review}
+                //     <br />
+                //     Author: {this.state.reviews[index].author}
+                //     <br/>
+                //     <Button onClick={this.addCommentOn}>Add Comment</Button>
+                //     <Button>View All Comments</Button>
+                //   </DialogContent>

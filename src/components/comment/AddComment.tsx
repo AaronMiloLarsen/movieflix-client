@@ -1,23 +1,113 @@
+
 import React from 'react'
 
-export interface Props {
-    
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@material-ui/core';
+
+
+
+
+
+type AddCommentProps = {
+    sessionToken: string;
+    addCommentOff: () => void;
+    reviewId: number;
 }
- 
-export interface State {
-    
+
+type AddCommentStates = {
+    open: boolean;
+    comment: string;
+    author: string;
+    setComment: (e:any) => any;
+    setAuthor: (e:any) => any;
 }
- 
-class AddComments extends React.Component<Props, State> {
-    constructor(props: Props) {
+
+class AddComment extends React.Component<AddCommentProps, AddCommentStates> {
+    constructor(props: AddCommentProps) {
         super(props);
-        this.state = {};
+        this.state = {
+            open: true,
+            comment: '',
+            author: '',
+            setComment: (e) => {
+                this.setState({
+                  comment: e
+                })
+            },
+            setAuthor: (e) => {
+                this.setState({
+                  author: e
+                })
+            },
+        };
     }
+
+    handleSubmit = (e:any) => {
+        console.log(this.props.reviewId)
+        e.preventDefault();
+        fetch(`http://localhost:3500/comment/create`,{
+            method: 'POST',
+            body: JSON.stringify({
+                comment: {
+                    comment: this.state.comment,
+                    author: this.state.author,
+                    reviewId: this.props.reviewId
+                }
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.sessionToken
+            })
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                this.state.setComment('')
+                this.state.setAuthor('')
+                // this.props.fetchMovies ()
+                this.handleClose()
+            })
+        }
+
+        handleClose = () => {
+            this.setState({open: false})
+            this.props.addCommentOff()
+
+        }
+
+
+
     render() { 
         return (  
-            <div>AddComments</div>
+            <Dialog open={this.state.open} maxWidth='md' fullWidth >
+                <DialogTitle>Add A Comment</DialogTitle>
+                <DialogContent>
+                    <TextField 
+                    autoFocus
+                    margin="dense"
+                    id="comment"
+                    label="Comment"
+                    // type="email"
+                    fullWidth
+                    onChange={(e:any)=> this.state.setComment(e.target.value)}
+                      />
+                </DialogContent>
+                <DialogContent>
+                    <TextField 
+                    
+                    margin="dense"
+                    id="author"
+                    label="Your Name"
+                    // type="email"
+                    onChange={(e:any)=> this.state.setAuthor(e.target.value)}
+                      />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleClose}>Cancel</Button>
+                    <Button type='submit' onClick={this.handleSubmit}>Add Comment</Button>
+                </DialogActions>
+            </Dialog>
         );
     }
 }
  
-export default AddComments;
+export default AddComment;

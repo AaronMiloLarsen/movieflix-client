@@ -3,12 +3,12 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from '../src/components/home/Header';
-import SideBar from './components/home/SideBar'
+
 import HomePage from './components/home/HomePage';
 import UserHome from './components/home/UserHome'
 import Auth from './auth/Auth';
 import Footer from './components/home/Footer';
-import  { Button } from '@material-ui/core'
+
 
 
 type AppStates = {
@@ -71,6 +71,11 @@ redirect = () => {
   )
 }
 
+// storeId = (id:any) => {
+  
+//   localStorage.setItem('userId', id)
+// }
+
   render() {
     return (
 
@@ -79,17 +84,17 @@ redirect = () => {
         
         <Router>
 
-          <Header />
-        {/* <Button href='/testhome'>PLEASE!</Button> */}
+          <Header 
+          //PROFILE BUTTON WILL GO HERE AS WELL AS CLEARTOKEN() FOR LOGOUT
+          />
+        
             <Switch>
 
               
               <Route exact path ='/userhome'>
-                {/* {this.state.sessionToken !== '' ? 
-                  <UserHome sessionToken={this.state.sessionToken}/> : <h1>SessionToken empty!</h1>} */}
+               
                   <UserHome sessionToken={this.state.sessionToken}/>
-                  {/* <Home sessionToken ={this.state.sessionToken}/> */}
-                  {/* <SideBar clearToken = {this.clearToken}/> */}
+                 
               </Route>
 
               <Route path = "/user/">
