@@ -10,7 +10,7 @@ type SignupProps = {
     lastName: string;
     email: string;
     password: string;
-    updateToken: (newToken: string) => void;
+    updateToken: (newToken: string, userId: string) => void;
     sessionToken: any;
     setFirstName: (e: any) => any;
     setLastName: (e: any) => any;
@@ -65,7 +65,7 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirectValue: 
         })
         .then((data) => {
                 console.log(data)
-                this.props.updateToken(data.sessionToken)
+                this.props.updateToken(data.sessionToken, data.user.id)
                 // this.props.redirect();
                 this.setState({redirectValue: '/userhome'})
             })

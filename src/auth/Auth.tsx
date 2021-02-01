@@ -6,6 +6,14 @@ import Login from './Login';
 import Signup from './Signup';
 
 
+
+type AuthProps = {
+  updateToken: (newToken:string, userId: string) => void;
+  redirect: () => void,
+  redirectValue: string
+
+}
+
 type AuthStates = {
     firstName: string;
     lastName: string;
@@ -20,12 +28,7 @@ type AuthStates = {
     setPassword: (e: any) => any;
 }
 
-type AuthProps = {
-  updateToken: (newToken:string) => void;
-  redirect: () => void,
-  redirectValue: string
 
-}
  
 class Auth extends React.Component< AuthProps, AuthStates> {
     constructor(props: AuthProps) {

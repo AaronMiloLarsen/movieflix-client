@@ -2,9 +2,11 @@ import React from 'react'
 import { Button, Menu, MenuItem } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import { Redirect } from 'react-router-dom';
 
 type HeaderProps = {
-    
+    clearToken: () => void;
+    sessionToken: string
 }
  
 type HeaderStates = {
@@ -43,13 +45,13 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
         }
     }
 
-    // openMenu = () => {
-    //     this.setState({open : !open})
-    // }
-
-    // closeMenu = () => {
-    //     this.setState({open : false})
-    // }
+    handleLogout = () => {
+        this.props.clearToken()
+        this.state.setOpen(false)
+        if (this.props.sessionToken === '') {
+            return <Redirect to="" />
+        }
+    }
 
     render() { 
         return (  
@@ -66,9 +68,9 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
                 // onClose={this.closeMenu()}
                 // TransitionComponent={Fade}
                 >
-                <MenuItem >Profile</MenuItem>
-                <MenuItem >My account</MenuItem>
-                <MenuItem >Logout</MenuItem>
+                <MenuItem ><Button href="/userhome">Home</Button></MenuItem>
+                <MenuItem ><Button href="/profile">My Profile</Button></MenuItem>
+                <MenuItem ><Button onClick={this.props.clearToken}>Logout</Button></MenuItem>
                 <MenuItem ><CloseIcon onClick={(e)=> this.state.setOpen(!this.state.open)}/></MenuItem>
                 </Menu>
             </div>

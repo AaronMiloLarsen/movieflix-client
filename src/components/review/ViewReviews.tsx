@@ -22,6 +22,7 @@ type ViewReviewsStates = {
     reviews: any;
     addComment: boolean;
     viewComments: boolean
+    reviewId: number
     // setReviews: (e:any) => void
 }
  
@@ -34,10 +35,7 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
             reviews: [],
             addComment: false,
             viewComments: false,
-            // setReviews: (e:any) => {
-            //     this.setState({
-            //       reviews: e })
-            // },
+            reviewId: 0,
         };
     }
 
@@ -75,25 +73,6 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
         this.setState({openReviews: true})
     }
 
-
-   
-        // console.log(this.state.reviews)
-
-    // reviewMapper = () => {
-    //     this.state.reviews?.map((reviews:any,index:number) => {
-    //         return (
-    //             <div key = {reviews.id}>
-    //             <IndividualReview
-    //             reviews={reviews}                       
-    //             sessionToken = {this.props.sessionToken}
-    //             addCommentOn = {this.addCommentOn}
-    //             // fetchMovies={this.fetchMovies}  
-    //             />
-    //             </div>
-    //         )
-    //     })
-    // }
-    
 
     addCommentOn = () => {
         this.setState({addComment: true})
@@ -135,6 +114,7 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
 
                 {this.state.reviews.length > 0 ? (this.state.reviews.map((event:any, index:any) => (
                 <DialogContent dividers 
+                onMouseEnter={()=> {this.setState({reviewId: event.id }); console.log(this.state.reviewId)}}
                 key={this.state.reviews.id}
                 >
                         Title: {this.state.reviews[index].title}
@@ -165,13 +145,13 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
                 {this.state.addComment ? <AddComment
                  sessionToken={this.props.sessionToken}
                  addCommentOff={this.addCommentOff}
-                 reviewId={this.state.reviews.id}
+                 reviewId={this.state.reviewId}
                  /> : <></>}
 
                 {this.state.viewComments ? <ViewComments
                  sessionToken={this.props.sessionToken}
                  viewCommentsOff={this.viewCommentsOff}
-                 reviewId={this.state.reviews.id}
+                 reviewId={this.state.reviewId}
                  /> : <></>}
                 
             </div>

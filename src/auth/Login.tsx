@@ -6,7 +6,7 @@ import { Redirect, } from 'react-router-dom'
 type LoginProps = {
     email: string;
     password: string;
-    updateToken: (newToken:string) => void;
+    updateToken: (newToken:string, userId:string) => void;
     sessionToken: any;
     getToken: any;
     setEmail: (e: any) => any;
@@ -56,7 +56,7 @@ class Login extends React.Component<LoginProps, {redirectValue: null|string} > {
                 return res.json();
             })
             .then((data) => {
-                this.props.updateToken(data.sessionToken)
+                this.props.updateToken(data.sessionToken, data.user.id)
                 // this.props.redirect()
                 console.log(data.sessionToken)
                 this.setState({redirectValue: '/userhome'})

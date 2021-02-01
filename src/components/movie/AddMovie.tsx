@@ -20,8 +20,8 @@ type AddMovieStates = {
  setTitle: (e: any) => any;
  setYear: (e:any) => any;
  setDuration: (e:any) => any;
- setDescription: (e:any) => any
-//  onClose: (e:EventListener) => void;
+ setDescription: (e:any) => any;
+
 }
  
 class AddMovie extends React.Component<AddMovieProps, AddMovieStates> {
@@ -35,7 +35,6 @@ class AddMovie extends React.Component<AddMovieProps, AddMovieStates> {
             duration: 0,
             description: '',
             addMovie: true,
-            // onClose: (e:EventListener) => void;
             setTitle: (e) => {
                 this.setState({
                   title: e

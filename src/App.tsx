@@ -8,6 +8,7 @@ import HomePage from './components/home/HomePage';
 import UserHome from './components/home/UserHome'
 import Auth from './auth/Auth';
 import Footer from './components/home/Footer';
+import Profile from './components/profile/Profile'
 
 
 
@@ -19,6 +20,7 @@ type AppStates = {
   sessionToken: string;
   redirect: null | string;
   redirectValue: string
+  userId: string
 }
 
 class App extends React.Component<{} ,AppStates> {
@@ -33,15 +35,17 @@ class App extends React.Component<{} ,AppStates> {
     sessionToken:'',
     redirect: null,
     redirectValue: '',
+    userId: ''
     }
     
   }
 
 
-updateToken = (newToken: any) => {
+updateToken = (newToken: string, userId:string) => {
   localStorage.setItem('token', newToken);
-  this.setState({ sessionToken: newToken });
-  console.log(newToken);
+  this.setState({ sessionToken: newToken, userId : userId });
+  localStorage.setItem('userId', JSON.stringify(userId))
+  console.log(newToken, userId);
 };
 
 clearToken = () => {
@@ -71,10 +75,12 @@ redirect = () => {
   )
 }
 
-// storeId = (id:any) => {
-  
-//   localStorage.setItem('userId', id)
-// }
+// WORK ON LOGOUT REDIRECT
+// MAKE AN ADMIN VIA POSTMAN
+// WORK ON ADMIN PORTAL
+// WORK ON READ ME FILE
+// WORK ON HEROKU DEPLOYMENT
+
 
   render() {
     return (
@@ -85,7 +91,8 @@ redirect = () => {
         <Router>
 
           <Header 
-          //PROFILE BUTTON WILL GO HERE AS WELL AS CLEARTOKEN() FOR LOGOUT
+          clearToken={this.clearToken}
+          sessionToken={this.state.sessionToken}
           />
         
             <Switch>
@@ -101,10 +108,15 @@ redirect = () => {
                 <Auth redirectValue={this.state.redirectValue} updateToken={this.updateToken} redirect={this.redirect}/>
               </Route>
 
-              <Route exact path="/">
+              <Route exact path="">
                 <HomePage />
               </Route>
               
+              <Route exact path="/profile">
+                <Profile 
+                userId={this.state.userId}
+                sessionToken={this.state.sessionToken} />
+              </Route>
 
             </Switch>
 
@@ -113,7 +125,6 @@ redirect = () => {
           <Footer />
         </div>
       </div>
-      
 
     );
   }

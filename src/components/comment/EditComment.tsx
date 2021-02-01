@@ -1,23 +1,148 @@
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, TextField } from '@material-ui/core';
 import React from 'react'
 
-export interface Props {
-    
+
+
+type editCommentProps = {
+    editCommentOff: () => void;
+    sessionToken: string;
+    fetchMyComments: () => void;
+    myComments: any;
+    commentId:number
 }
  
-export interface State {
-    
+type editCommentStates = {
+    open: boolean;
+    comment: string,
+    author: string,
+    // addComment: boolean,
+    // currentComment: any;
+    setComment: (e: any) => any;
+    setAuthor: (e:any) => any;
 }
  
-class EditComments extends React.Component<Props, State> {
-    constructor(props: Props) {
+class EditComment extends React.Component<editCommentProps, editCommentStates> {
+    constructor(props: editCommentProps) {
         super(props);
-        this.state = {};
+        this.state = {
+            open: true,
+            comment: '',
+            author: '',
+            // addComment: true,
+            // currentComment: '',
+            setComment: (e) => {
+                this.setState({
+                  comment: e
+                })
+            },
+            setAuthor: (e) => {
+                this.setState({
+                  author: e
+                })
+            },
+        };
     }
+
+
+componentDidMount() {
+    // this.fetchCurrentComment()
+    // console.log(this.props.CommentId)
+}
+
+
+
+    handleSubmit = (e:any) => {
+        
+        console.log(this.props.commentId)
+        e.preventDefault();
+        fetch(`http://localhost:3500/comment/${this.props.commentId}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                comment: {
+                    comment: this.state.comment,
+                    author: this.state.author,
+                }
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.sessionToken
+            })
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                this.state.setComment('')
+                this.state.setAuthor('')
+                this.props.fetchMyComments()
+                this.handleClose()
+    
+            })
+    }
+    
+    handleClose = () => {
+        this.setState({open: false})
+        this.props.editCommentOff()
+    }
+
+    //  fetchCurrentMovie = async () => {
+    //     await fetch(`http://localhost:3500/movie/${this.props.movieId}`, {
+    //         method: 'GET',
+    //         headers: new Headers({
+    //             'Content-Type': 'application/json',
+    //             'Authorization': this.props.sessionToken
+    //         })
+    //     }) .then((movie) => movie.json())
+    //        .then((movieData) => {
+    //             this.setState({
+    //                 currentMovie: movieData
+    //             })
+    //             console.log(movieData)
+    //             console.log(this.state.currentMovie.title)
+    //             this.setState({open : true})
+    //        }) .catch (
+    //            (err) => console.log(err)
+    //        )
+    // }
+
+
+
+    // dialogStyle = {
+    //     root: {
+    //         alignItems:'center'
+    //     }
+    // }
     render() { 
         return (  
-            <div>EditComments</div>
+            <Dialog open={this.state.open} maxWidth='md' fullWidth >
+                <DialogTitle>Edit Your Comment</DialogTitle>
+                <DialogContent>
+                    <TextField 
+                    autoFocus
+                    margin="dense"
+                    id="comment"
+                    label="Comment"
+                    // type="email"
+                    fullWidth
+                    onChange={(e)=> this.state.setComment(e.target.value)}
+                      />
+                </DialogContent>
+                <DialogContent>
+                    <TextField 
+                    
+                    margin="dense"
+                    id="author"
+                    label="Your Name"
+                    // type="email"
+                    onChange={(e)=> this.state.setAuthor(e.target.value)}
+                      />
+                </DialogContent>
+                
+                    <Button onClick={this.handleClose}>Cancel</Button>
+                    <Button type='submit' onClick={this.handleSubmit}>Confirm</Button>
+                
+            </Dialog>
         );
     }
 }
  
-export default EditComments;
+export default EditComment;
