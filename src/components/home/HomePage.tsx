@@ -1,17 +1,19 @@
 import React from 'react';
 
-import  { Button } from '@material-ui/core'
+import  { Button, Grid } from '@material-ui/core'
 
-export interface Props {
+import image from '../../assets/homeImage.png'
+
+type Props = {
     
 }
  
-export interface State {
+type States = {
     
 }
 
 
-class HomePage extends React.Component<Props, State> {
+class HomePage extends React.Component<Props, States> {
     constructor(props: Props) {
         super(props);
        
@@ -19,23 +21,28 @@ class HomePage extends React.Component<Props, State> {
 
     welcomeStyle = {
         root: {
-            // display:'flex',
-            width: '100%',
+            display:'flex',
+            width: '100vw',
             margin: 'auto',
-            height: '100%'
+            height: '100%',
         }
     }
 
     render() { 
         return (  
-            <div style={this.welcomeStyle.root}>
+            <Grid 
+            alignItems="center"
+            justify="center"
+            style={this.welcomeStyle.root} 
+            className='homepage'>
                 <h5>Welcome to the HomePage!</h5>
+                <img src={image} width='400px' height='300px'/>
                  <br />
                 <Button href='/user/login'>Login</Button>
                 <br />
                 <br />
                 <Button href='/user/signup'>Signup</Button>
-            </div>
+            </Grid>
         );
     }
 }

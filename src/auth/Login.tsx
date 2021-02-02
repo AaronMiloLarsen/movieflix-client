@@ -1,7 +1,8 @@
 import React from 'react'
-import {Container} from '@material-ui/core';
+import {Button, Container, Grid, TextField} from '@material-ui/core';
 
 import { Redirect, } from 'react-router-dom'
+import { exit } from 'process';
 
 type LoginProps = {
     email: string;
@@ -12,25 +13,23 @@ type LoginProps = {
     setEmail: (e: any) => any;
     setPassword: (e: any) => any;
     redirect: () => void
-    redirectValue: string
+    redirectValue: string;
+}
+
+type LoginStates = {
+    hidden: boolean
+    redirectValue: null|string
 }
 
  
-class Login extends React.Component<LoginProps, {redirectValue: null|string} > {
+class Login extends React.Component<LoginProps, LoginStates > {
     constructor(props: LoginProps) {
         super(props);
         this.state = {
-            redirectValue: null
+            redirectValue: null,
+            hidden: true
         }
     }
-
-    // updateToken = (newToken: any) => {
-    //     localStorage.setItem('token', newToken);
-    //     this.setState({ sessionToken: newToken });
-    //     console.log(newToken);
-    //   };
-
-    // history = useHistory()
 
     handleSubmit = (event:any) => {
         event.preventDefault();
@@ -50,57 +49,76 @@ class Login extends React.Component<LoginProps, {redirectValue: null|string} > {
             .then((res) => {
                 if (res.status === 200) {
                   console.log("Login successful.")
+                  
                 } else {
                   console.log("Login failed.");
+                
                 }
                 return res.json();
             })
             .then((data) => {
                 this.props.updateToken(data.sessionToken, data.user.id)
-                // this.props.redirect()
                 console.log(data.sessionToken)
+                if (data.user.admin === true){
+                    localStorage.setItem('admin', 'true')
+                }
                 this.setState({redirectValue: '/userhome'})
-                // this.props.history.push('/testhome')
+                
             })
     }
 
-
-    
+    welcomeStyle = {
+        root: {
+            display:'flex',
+            width: '100vw',
+            margin: 'auto',
+            height: '100%',
+        }
+    }
 
     render() { 
         if (this.state.redirectValue){
             return <Redirect to = {this.state.redirectValue} />
         }
         return (
-            <div className='center'>
+            <Grid 
+            style={this.welcomeStyle.root}
+            className='homepage'
+            alignItems="center"
+            justify="center"
+            >
                 
-                <Container maxWidth="sm">
+                
                 <h3>Login</h3>
                 
                 <form onSubmit = {this.handleSubmit}>
                
-                <label htmlFor="email">Email:</label>
                 <br />
-                <input id="email" 
-                        // aria-describedby="my-helper-text" 
-                        className='email' 
-                        onChange={(e) => this.props.setEmail(e.target.value)} 
-                        value={this.props.email}/>
+                <TextField 
+                label="email"
+                id="email"  
+                className='email'
+                onChange={(e) => this.props.setEmail(e.target.value)} 
+                value={this.props.email}/>
 
                 <br />
-                <label htmlFor="password">Password:</label>
-                <br />
-                <input id="password" 
-                        // aria-describedby="my-helper-text" 
-                        className='password' 
-                        onChange={(e) => this.props.setPassword(e.target.value)} 
-                        value={this.props.password}/>
-                <br />
-                <input type="submit" value="Submit" />
-                </form> 
-                </Container>
                 
-            </div>
+                <br />
+                <TextField
+                    label="password" 
+                    id="password" 
+                    type={this.state.hidden ? 'password' : 'text'}
+                    className='password' 
+                    onChange={(e) => this.props.setPassword(e.target.value)} 
+                    value={this.props.password}/>
+                    {/* <Button onClick={(e) => this.toggleShow}>Show / Hide</Button> */}
+                <br />
+                <br/>
+                <Button type="submit" value="Submit"> Submit</Button>
+                </form> 
+                
+                
+            </Grid>
         );
     }
 }

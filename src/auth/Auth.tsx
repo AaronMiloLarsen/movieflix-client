@@ -10,7 +10,8 @@ import Signup from './Signup';
 type AuthProps = {
   updateToken: (newToken:string, userId: string) => void;
   redirect: () => void,
-  redirectValue: string
+  redirectValue: string,
+  // adminChecker: (adminData:string) => void
 
 }
 
@@ -83,7 +84,8 @@ class Auth extends React.Component< AuthProps, AuthStates> {
                             getToken={this.state.getToken}
                             updateToken = {this.props.updateToken}
                             redirect = {this.props.redirect}
-                            redirectValue = {this.props.redirectValue}
+                            redirectValue={this.props.redirectValue}
+                            // adminChecker={this.props.adminChecker}
                             />
                         </Route>
                     {/* </Switch>
@@ -104,6 +106,7 @@ class Auth extends React.Component< AuthProps, AuthStates> {
                             updateToken = {this.props.updateToken}
                             redirect = {this.props.redirect}
                             redirectValue = {this.props.redirectValue}
+                            
                             />
                         </Route>
                     </Switch>

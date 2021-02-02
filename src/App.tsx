@@ -9,6 +9,10 @@ import UserHome from './components/home/UserHome'
 import Auth from './auth/Auth';
 import Footer from './components/home/Footer';
 import Profile from './components/profile/Profile'
+import Admin from './components/home/Admin'
+import About from './components/home/About'
+import { Button, Dialog, Modal } from '@material-ui/core';
+
 
 
 
@@ -75,40 +79,54 @@ redirect = () => {
   )
 }
 
-// WORK ON LOGOUT REDIRECT
+
 // MAKE AN ADMIN VIA POSTMAN
 // WORK ON ADMIN PORTAL
 // WORK ON READ ME FILE
 // WORK ON HEROKU DEPLOYMENT
 
+// alert('Silly User! You arent an Admin!')
+//     this.setState({redirectValue: '/'})
+//      if (this.state.redirectValue){
+//       return <Redirect to = {this.state.redirectValue} />
+//   }
+
 
   render() {
+    
     return (
 
       <div className='app'>
         <div className="center">
         
         <Router>
+          
 
           <Header 
           clearToken={this.clearToken}
           sessionToken={this.state.sessionToken}
+          redirectValue={this.state.redirectValue}
+          // adminChecker={this.adminChecker}
           />
         
             <Switch>
 
               
               <Route exact path ='/userhome'>
-               
-                  <UserHome sessionToken={this.state.sessionToken}/>
-                 
+                <UserHome 
+                sessionToken={this.state.sessionToken}
+                // adminChecker={this.adminChecker} 
+                />
               </Route>
 
               <Route path = "/user/">
-                <Auth redirectValue={this.state.redirectValue} updateToken={this.updateToken} redirect={this.redirect}/>
+                <Auth 
+                redirectValue={this.state.redirectValue} 
+                updateToken={this.updateToken} 
+                redirect={this.redirect}/>
               </Route>
 
-              <Route exact path="">
+              <Route exact path="/">
                 <HomePage />
               </Route>
               
@@ -116,6 +134,17 @@ redirect = () => {
                 <Profile 
                 userId={this.state.userId}
                 sessionToken={this.state.sessionToken} />
+              </Route>
+
+              <Route exact path="/admin">
+                <Admin
+                sessionToken={this.state.sessionToken}
+                // adminChecker={this.adminChecker}  
+                />
+              </Route>
+
+              <Route exact path="/about">
+                <About />
               </Route>
 
             </Switch>
@@ -133,3 +162,22 @@ redirect = () => {
 
 
 export default App;
+
+// adminChecker = () => {
+//   if (localStorage.getItem('admin')) {
+//      this.setState({redirectValue: '/admin'})
+//      if (this.state.redirectValue){
+//       return <Redirect to = {this.state.redirectValue} />
+//   }
+//   }
+//   else {
+//     this.render() {
+//     return (
+//       <Dialog open={true}>
+//         <h3>Silly User! You aren't an Admin!</h3>
+//         <Button href='/userhome'>Go Home!</Button>
+//       </Dialog>
+//     )
+//     }
+//   }
+// }

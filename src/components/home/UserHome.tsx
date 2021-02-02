@@ -5,11 +5,14 @@ import {Button, Grid } from '@material-ui/core'
 
 import IndividualMovie from '../movie/IndividualMovie';
 import AddMovie from '../movie/AddMovie';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Admin from './Admin';
 
 
 
 type UserHomeProps = {
     sessionToken: string
+    // adminChecker: () => void
 }
  
 type UserHomeStates = {
@@ -33,6 +36,7 @@ type UserHomeStates = {
     setCommentAuthor: (e: any) => any;
     updateToken: any;
     sessionToken: any;
+    redirectValue: string
     
 
 }
@@ -56,6 +60,7 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
             commentAuthor: "",
             updateToken: "",
             sessionToken: "",
+            redirectValue: '',
             setMovie: (e:any) => {
                 this.setState({
                   movie: e })
@@ -134,6 +139,16 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
             this.setState({addMovie: false})
         }
 
+        // adminChecker = () => {
+        //     if (localStorage.getItem('admin')) {
+        //        this.setState({redirectValue: '/admin'})
+        //        return <Redirect to = {this.state.redirectValue}/>
+        //     }
+        //     else {
+        //       alert('Silly User! You arent an Admin!')
+        //     }
+        //   }
+
         // userHomeStyle =  {
         //     root: {
         //         display: 'flex',
@@ -146,6 +161,7 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
 
 
     render() { 
+        
         return ( 
             <>
                 
@@ -176,8 +192,6 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
                     addMovieOff={this.addMovieOff}
                     /> : <></>
                 }
-
-            
 
         </>
         );

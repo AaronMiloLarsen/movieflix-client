@@ -23,17 +23,19 @@ type SignupProps = {
 type SignupStates = {
     updateToken: (newToken: string) => void;
     redirectValue: null | string;
+    hidden: boolean
 }
 
 
 //fetch then returns object interface
 
-class Signup extends React.Component<SignupProps, SignupStates, {redirectValue: null | string}> {
+class Signup extends React.Component<SignupProps, SignupStates> {
     constructor(props: SignupProps) {
         super(props);
         this.state = {
             updateToken: (any) => any,
-            redirectValue: null
+            redirectValue: null,
+            hidden:true
         }
     }
 
@@ -55,9 +57,9 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirectValue: 
         })
         .then((res) => {
             if (res.status === 200) {
-              alert("Signup Successful!")
+              console.log("Signup Successful!")
             } else {
-              alert("Signup Failed!");
+              console.log("Signup Failed!");
             }
             console.log(res)
             return res.json();
@@ -70,6 +72,10 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirectValue: 
                 this.setState({redirectValue: '/userhome'})
             })
     };
+
+    toggleShow = () => {
+        this.setState({hidden: !this.state.hidden})
+    }
     
 
     render() {
@@ -108,6 +114,7 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirectValue: 
                         <label htmlFor="password">Password:</label>
                         <br />
                         <input
+                            type={this.state.hidden ? 'password' : 'text'}
                             id="password"  
                             className='password' 
                             onChange={(e) => this.props.setPassword(e.target.value)} 

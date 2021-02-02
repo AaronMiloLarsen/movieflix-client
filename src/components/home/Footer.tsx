@@ -1,24 +1,17 @@
 import React from 'react';
 
+import CopyrightIcon from '@material-ui/icons/Copyright';
 
-export interface Props {
-    
-}
+
  
-export interface State {
-    
-}
- 
-class Footer extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-    }
+class Footer extends React.Component {
+   
 
     footerStyle = {
         root: {
-            display: 'flex',
-            justifyContent: 'center',
-            bottom: '0px',
+            display: 'fixed',
+            justifyContent: 'right',
+            bottom: '0',
             width: '100%',
             height: '50px',
             backgroundColor: 'black',
@@ -28,7 +21,9 @@ class Footer extends React.Component<Props, State> {
     render() { 
         return ( 
             <div style = {this.footerStyle.root}>
-                <p>This is the footer!</p>
+                <div>
+                <p><CopyrightIcon/> Copywright 2021 Movieflix</p>
+                </div>
             </div>
          );
     }
