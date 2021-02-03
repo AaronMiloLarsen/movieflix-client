@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@material-ui/core';
 
-
+import APIURL from '../../helpers/environment';
 
 
 
@@ -44,7 +44,7 @@ class AddComment extends React.Component<AddCommentProps, AddCommentStates> {
     handleSubmit = (e:any) => {
         console.log(this.props.reviewId)
         e.preventDefault();
-        fetch(`http://localhost:3500/comment/create`,{
+        fetch(`${APIURL}/comment/create`,{
             method: 'POST',
             body: JSON.stringify({
                 comment: {

@@ -5,6 +5,8 @@ import { Button, Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import APIURL from '../../helpers/environment';
+
 
 type DeleteUserProps = {
     deleteUserOff: () => void
@@ -27,7 +29,7 @@ class DeleteUser extends React.Component<DeleteUserProps, DeleteUserStates> {
     }
 
     handleDelete = (e: any) => {
-        fetch(`http://localhost:3500/user/${this.props.userId}`, {
+        fetch(`${APIURL}/user/${this.props.userId}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

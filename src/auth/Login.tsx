@@ -3,6 +3,8 @@ import {Button, Grid, TextField} from '@material-ui/core';
 
 import { Redirect, } from 'react-router-dom'
 
+import APIURL from '../helpers/environment';
+
 type LoginProps = {
     email: string;
     password: string;
@@ -32,7 +34,7 @@ class Login extends React.Component<LoginProps, LoginStates > {
 
     handleSubmit = (event:any) => {
         event.preventDefault();
-        fetch('http://localhost:3500/user/login', {
+        fetch(`${APIURL}/user/login`, {
             method: 'POST',
             body: JSON.stringify({
                 user: {

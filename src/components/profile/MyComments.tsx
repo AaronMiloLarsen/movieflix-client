@@ -7,6 +7,8 @@ import { Button, Card, CardActions, CardContent, Grid, List } from '@material-ui
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import APIURL from '../../helpers/environment';
+
 type MyCommentsProps = {
     sessionToken: string
 }
@@ -35,7 +37,7 @@ class MyComments extends React.Component<MyCommentsProps, MyCommentsStates> {
 
     fetchMyComments = () => {
         console.log()
-        fetch(`http://localhost:3500/comment/mycomments/${localStorage.getItem('userId')}`, {
+        fetch(`${APIURL}/comment/mycomments/${localStorage.getItem('userId')}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

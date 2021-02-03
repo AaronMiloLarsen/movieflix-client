@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import React from 'react'
 import IndividualUser from './IndividualUser';
 
+import APIURL from '../../helpers/environment';
 
 type AdminProps = {
     sessionToken: string
@@ -36,7 +37,7 @@ class Admin extends React.Component<AdminProps, AdminStates> {
     }
 
     fetchUsers = () => {
-        fetch('http://localhost:3500/user/all', {
+        fetch(`${APIURL}/user/all`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

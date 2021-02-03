@@ -5,6 +5,8 @@ import { Button, Grid } from '@material-ui/core'
 import IndividualMovie from '../movie/IndividualMovie';
 import AddMovie from '../movie/AddMovie';
 
+import APIURL from '../../helpers/environment';
+
 
 type UserHomeProps = {
     sessionToken: string
@@ -89,7 +91,7 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
     }
 
     fetchMovies = () => {
-        fetch('http://localhost:3500/movie/', {
+        fetch(`${APIURL}/movie/`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -119,7 +121,7 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
                     <IndividualMovie
                         movie={movie}
                         sessionToken={this.props.sessionToken}
-                    // fetchMovies={this.fetchMovies}  
+                     
                     />
                 </div>
             )

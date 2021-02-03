@@ -4,6 +4,8 @@ import React from 'react'
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import APIURL from '../../helpers/environment';
+
 type DeleteMovieProps = {
     deleteMovieOff: () => void;
     sessionToken: string;
@@ -26,7 +28,7 @@ class DeleteMovie extends React.Component<DeleteMovieProps, DeleteMovieStates> {
     }
 
     handleDelete = (e: any) => {
-        fetch(`http://localhost:3500/movie/${this.props.movieId}`, {
+        fetch(`${APIURL}/movie/${this.props.movieId}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 import React from 'react'
 
-
+import APIURL from '../../helpers/environment';
 
 type editCommentProps = {
     editCommentOff: () => void;
@@ -45,7 +45,7 @@ class EditComment extends React.Component<editCommentProps, editCommentStates> {
 
         console.log(this.props.commentId)
         e.preventDefault();
-        fetch(`http://localhost:3500/comment/${this.props.commentId}`, {
+        fetch(`${APIURL}/comment/${this.props.commentId}`, {
             method: 'PUT',
             body: JSON.stringify({
                 comment: {

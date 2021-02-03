@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import {Button, Container, TextField} from '@material-ui/core';
 
+import APIURL from '../helpers/environment';
 
 type SignupProps = {
     firstName: string;
@@ -38,7 +39,7 @@ class Signup extends React.Component<SignupProps, SignupStates> {
 
     handleSubmit = (event: any) => {
         event.preventDefault();
-        fetch(`http://localhost:3500/user/signup`, {
+        fetch(`${APIURL}/user/signup`, {
             method: 'POST',
             body: JSON.stringify({
                 user: {

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel, TextField, } from '@material-ui/core';
 
+import APIURL from '../../helpers/environment';
 
 type AddReviewProps = {
     sessionToken: string
@@ -60,7 +61,7 @@ class AddReview extends React.Component<AddReviewProps, AddReviewStates> {
     handleSubmit = (e: any) => {
         e.preventDefault();
         console.log(this.props.movieId)
-        fetch(`http://localhost:3500/review/create`, {
+        fetch(`${APIURL}/review/create`, {
             method: 'POST',
             body: JSON.stringify({
                 review: {

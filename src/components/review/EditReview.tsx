@@ -1,6 +1,8 @@
 import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel, TextField } from '@material-ui/core';
 import React from 'react'
 
+import APIURL from '../../helpers/environment';
+
 
 
 type editReviewProps = {
@@ -61,7 +63,7 @@ class EditReview extends React.Component<editReviewProps, editReviewStates> {
 
         console.log(this.props.myReviews)
         e.preventDefault();
-        fetch(`http://localhost:3500/review/${this.props.reviewId}`, {
+        fetch(`${APIURL}/review/${this.props.reviewId}`, {
             method: 'PUT',
             body: JSON.stringify({
                 review: {

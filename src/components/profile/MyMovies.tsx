@@ -7,6 +7,7 @@ import { Button, Card, CardActions, CardContent, Grid, List } from '@material-ui
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import APIURL from '../../helpers/environment';
 
 
 type MyMoviesProps = {
@@ -46,7 +47,7 @@ class MyMovies extends React.Component<MyMoviesProps, MyMoviesStates> {
 
     fetchMyMovies = () => {
         console.log(this.props.userId)
-        fetch(`http://localhost:3500/movie/mymovies/${localStorage.getItem('userId')}`, {
+        fetch(`${APIURL}/movie/mymovies/${localStorage.getItem('userId')}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
