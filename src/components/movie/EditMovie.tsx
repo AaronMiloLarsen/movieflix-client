@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel } from '@material-ui/core';
 import React from 'react'
 
+import APIURL from '../../helpers/environment';
 
 
 type editMovieProps = {
@@ -63,7 +64,7 @@ class EditMovie extends React.Component<editMovieProps, editMovieStates> {
 
         console.log(this.props.movieId)
         e.preventDefault();
-        fetch(`http://localhost:3500/movie/${this.props.movieId}`, {
+        fetch(`${APIURL}/movie/${this.props.movieId}`, {
             method: 'PUT',
             body: JSON.stringify({
                 movie: {

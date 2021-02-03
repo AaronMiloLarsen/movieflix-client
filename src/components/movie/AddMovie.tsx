@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel } from '@material-ui/core';
 
+import APIURL from '../../helpers/environment';
+
 
 type AddMovieProps = {
     sessionToken: string
@@ -60,7 +62,7 @@ class AddMovie extends React.Component<AddMovieProps, AddMovieStates> {
 
     handleSubmit = (e: any) => {
         e.preventDefault();
-        fetch(`http://localhost:3500/movie/create`, {
+        fetch(`${APIURL}/movie/create`, {
             method: 'POST',
             body: JSON.stringify({
                 movie: {

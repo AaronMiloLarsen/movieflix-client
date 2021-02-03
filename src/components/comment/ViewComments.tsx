@@ -5,7 +5,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mate
 import CloseIcon from '@material-ui/icons/Close';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
-
+import APIURL from '../../helpers/environment';
 
 type ViewCommentsProps = {
     sessionToken: string;
@@ -41,7 +41,7 @@ class ViewComments extends React.Component<ViewCommentsProps, ViewCommentsStates
     fetchComments = () => {
 
         console.log(this.props.reviewId)
-        fetch(`http://localhost:3500/comment/allcomments/${this.props.reviewId}`, {
+        fetch(`${APIURL}/comment/allcomments/${this.props.reviewId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

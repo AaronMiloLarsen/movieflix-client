@@ -4,6 +4,8 @@ import React from 'react'
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import APIURL from '../../helpers/environment';
+
 type DeleteCommentProps = {
     deleteCommentOff: () => void;
     sessionToken: string;
@@ -26,7 +28,7 @@ class DeleteComment extends React.Component<DeleteCommentProps, DeleteCommentSta
     }
 
     handleDelete = (e:any) => {
-        fetch(`http://localhost:3500/comment/${this.props.commentId}`,{
+        fetch(`${APIURL}/comment/${this.props.commentId}`,{
         method: 'DELETE',
         headers: new Headers({
             'Content-Type': 'application/json',

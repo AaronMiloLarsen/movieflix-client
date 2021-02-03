@@ -7,6 +7,8 @@ import { Button, Card, CardActions, CardContent, Grid, List } from '@material-ui
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import APIURL from '../../helpers/environment';
+
 type MyReviewsProps = {
     sessionToken: string,
     userId: string
@@ -36,7 +38,7 @@ class MyReviews extends React.Component<MyReviewsProps, MyReviewsStates> {
 
     fetchMyReviews = () => {
         console.log()
-        fetch(`http://localhost:3500/review/myreviews/${localStorage.getItem('userId')}`, {
+        fetch(`${APIURL}/review/myreviews/${localStorage.getItem('userId')}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

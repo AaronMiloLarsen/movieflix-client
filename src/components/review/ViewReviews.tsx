@@ -8,6 +8,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mate
 import CloseIcon from '@material-ui/icons/Close';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
+import APIURL from '../../helpers/environment';
 
 
 type ViewReviewsProps = {
@@ -50,7 +51,7 @@ class ViewReviews extends React.Component<ViewReviewsProps, ViewReviewsStates> {
     fetchReviews = () => {
 
         console.log(this.props.movieId)
-        fetch(`http://localhost:3500/review/allreviews/${this.props.movieId}`, {
+        fetch(`${APIURL}/review/allreviews/${this.props.movieId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

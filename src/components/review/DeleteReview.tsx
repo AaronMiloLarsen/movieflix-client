@@ -5,6 +5,8 @@ import { Button, Dialog, DialogActions, DialogContent } from '@material-ui/core'
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import APIURL from '../../helpers/environment';
+
 
 type DeleteReviewProps = {
     deleteReviewOff: () => void
@@ -27,7 +29,7 @@ class DeleteReview extends React.Component<DeleteReviewProps, DeleteReviewStates
     }
 
     handleDelete = (e: any) => {
-        fetch(`http://localhost:3500/review/${this.props.reviewId}`, {
+        fetch(`${APIURL}/review/${this.props.reviewId}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
