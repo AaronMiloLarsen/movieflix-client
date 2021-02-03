@@ -11,7 +11,7 @@ switch (window.location.hostname) {
     // this is the deployed react application
     case 'a-a-rons-movieflix.herokuapp.com':
         // this is the full url of your deployed API
-        APIURL = 'https://a-a-rons-movieflix.herokuapp.com'
+        APIURL = 'https://movieflix-server.herokuapp.com/'
 }
 
 export default APIURL;
