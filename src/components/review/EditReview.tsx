@@ -1,59 +1,57 @@
-import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, FormControl, Input, InputLabel, TextField } from '@material-ui/core';
 import React from 'react'
 
 
 
-type editMovieProps = {
-    editMovieOff: () => void;
+type editReviewProps = {
+    editReviewOff: () => void;
     sessionToken: string;
-    fetchMyMovies: () => void;
-    myMovies: any;
-    movieId: number
+    fetchMyReviews: () => void;
+    myReviews: any;
+    reviewId: number
 }
 
-type editMovieStates = {
+type editReviewStates = {
     open: boolean;
     title: string,
-    year: number,
-    duration: number,
-    description: string,
-    addMovie: boolean,
-    currentMovie: any;
+    emotion: string,
+    review: string,
+    author: string,
+    addReview: boolean,
     setTitle: (e: any) => any;
-    setYear: (e: any) => any;
-    setDuration: (e: any) => any;
-    setDescription: (e: any) => any
+    setEmotion: (e: any) => any;
+    setReview: (e: any) => any;
+    setAuthor: (e: any) => any
 }
 
-class EditMovie extends React.Component<editMovieProps, editMovieStates> {
-    constructor(props: editMovieProps) {
+class EditReview extends React.Component<editReviewProps, editReviewStates> {
+    constructor(props: editReviewProps) {
         super(props);
         this.state = {
             open: true,
             title: '',
-            year: 0,
-            duration: 0,
-            description: '',
-            addMovie: true,
-            currentMovie: '',
+            emotion: '',
+            review: '',
+            author: '',
+            addReview: true,
             setTitle: (e) => {
                 this.setState({
                     title: e
                 })
             },
-            setYear: (e) => {
+            setEmotion: (e) => {
                 this.setState({
-                    year: e
+                    emotion: e
                 })
             },
-            setDuration: (e) => {
+            setReview: (e) => {
                 this.setState({
-                    duration: e
+                    review: e
                 })
             },
-            setDescription: (e) => {
+            setAuthor: (e) => {
                 this.setState({
-                    description: e
+                    author: e
                 })
             },
         };
@@ -61,16 +59,16 @@ class EditMovie extends React.Component<editMovieProps, editMovieStates> {
 
     handleSubmit = (e: any) => {
 
-        console.log(this.props.movieId)
+        console.log(this.props.myReviews)
         e.preventDefault();
-        fetch(`http://localhost:3500/movie/${this.props.movieId}`, {
+        fetch(`http://localhost:3500/review/${this.props.reviewId}`, {
             method: 'PUT',
             body: JSON.stringify({
-                movie: {
+                review: {
                     title: this.state.title,
-                    year: this.state.year,
-                    duration: this.state.duration,
-                    description: this.state.description,
+                    emotion: this.state.emotion,
+                    review: this.state.review,
+                    author: this.state.author,
                 }
             }),
             headers: new Headers({
@@ -82,10 +80,10 @@ class EditMovie extends React.Component<editMovieProps, editMovieStates> {
             .then((data) => {
                 console.log(data)
                 this.state.setTitle('')
-                this.state.setYear(0)
-                this.state.setDuration(0)
-                this.state.setDescription('')
-                this.props.fetchMyMovies()
+                this.state.setEmotion('')
+                this.state.setReview('')
+                this.state.setAuthor('')
+                this.props.fetchMyReviews()
                 this.handleClose()
 
             })
@@ -93,7 +91,7 @@ class EditMovie extends React.Component<editMovieProps, editMovieStates> {
 
     handleClose = () => {
         this.setState({ open: false })
-        this.props.editMovieOff()
+        this.props.editReviewOff()
     }
 
     dialogStyle = {
@@ -103,8 +101,12 @@ class EditMovie extends React.Component<editMovieProps, editMovieStates> {
     }
     render() {
         return (
-            <Dialog open={this.state.open} style={this.dialogStyle.root}>
-                <DialogTitle>Edit your Movie! </DialogTitle>
+
+            <Dialog open={this.state.open}
+                maxWidth='lg'
+                fullWidth
+            >
+                <DialogTitle>Edit your Review!</DialogTitle>
                 <DialogContent >
                     <FormControl >
                         <InputLabel htmlFor='title'>Title</InputLabel>
@@ -113,20 +115,23 @@ class EditMovie extends React.Component<editMovieProps, editMovieStates> {
                 </DialogContent>
                 <DialogContent >
                     <FormControl>
-                        <InputLabel htmlFor='year'>Year</InputLabel>
-                        <Input id='year' onChange={(e) => this.state.setYear(e.target.value)} />
+                        <InputLabel htmlFor='emotion'>Emotion</InputLabel>
+                        <Input id='emotion' onChange={(e) => this.state.setEmotion(e.target.value)} />
                     </FormControl>
                 </DialogContent>
                 <DialogContent >
-                    <FormControl>
-                        <InputLabel htmlFor='duration'>Duration</InputLabel>
-                        <Input id='duration' onChange={(e) => this.state.setDuration(e.target.value)} />
-                    </FormControl>
+                    <TextField
+                        id="standard-multiline-flexible"
+                        label="Review"
+                        multiline
+                        rowsMax={8}
+                        fullWidth
+                        onChange={(e) => this.state.setReview(e.target.value)} />
                 </DialogContent>
                 <DialogContent >
                     <FormControl>
-                        <InputLabel htmlFor='description'>Description</InputLabel>
-                        <Input id='description' onChange={(e) => this.state.setDescription(e.target.value)} />
+                        <InputLabel htmlFor='author'>Your Name:</InputLabel>
+                        <Input id='author' onChange={(e) => this.state.setAuthor(e.target.value)} />
                     </FormControl>
                 </DialogContent>
                 <DialogContent >
@@ -138,4 +143,4 @@ class EditMovie extends React.Component<editMovieProps, editMovieStates> {
     }
 }
 
-export default EditMovie;
+export default EditReview;

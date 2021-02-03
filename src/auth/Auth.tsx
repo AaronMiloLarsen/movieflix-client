@@ -1,10 +1,19 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch,  } from 'react-router-dom'
 
 import Login from './Login';
 import Signup from './Signup';
 
+
+
+type AuthProps = {
+  updateToken: (newToken:string, userId: string) => void;
+  redirect: () => void,
+  redirectValue: string,
+  
+
+}
 
 type AuthStates = {
     firstName: string;
@@ -12,7 +21,6 @@ type AuthStates = {
     email: string;
     password: string;
     sessionToken: any;
-    // updateToken: (newToken:string) => void;
     getToken: any;
     setFirstName: (e: any) => any;
     setLastName: (e: any) => any;
@@ -20,12 +28,7 @@ type AuthStates = {
     setPassword: (e: any) => any;
 }
 
-type AuthProps = {
-  updateToken: (newToken:string) => void;
-  redirect: () => void,
-  redirectValue: string
 
-}
  
 class Auth extends React.Component< AuthProps, AuthStates> {
     constructor(props: AuthProps) {
@@ -68,7 +71,7 @@ class Auth extends React.Component< AuthProps, AuthStates> {
     render() { 
         return ( 
             <div>
-                <Router>
+                
                     <Switch>
                         <Route exaxt path='/user/login'>
                             <Login 
@@ -80,13 +83,11 @@ class Auth extends React.Component< AuthProps, AuthStates> {
                             getToken={this.state.getToken}
                             updateToken = {this.props.updateToken}
                             redirect = {this.props.redirect}
-                            redirectValue = {this.props.redirectValue}
+                            redirectValue={this.props.redirectValue}
+                            
                             />
                         </Route>
-                    {/* </Switch>
-                </Router>
-                <Router>
-                    <Switch> */}
+              
                         <Route exact path='/user/signup'>
                             <Signup 
                             firstName = {this.state.firstName}
@@ -100,11 +101,12 @@ class Auth extends React.Component< AuthProps, AuthStates> {
                             sessionToken = {this.state.sessionToken}
                             updateToken = {this.props.updateToken}
                             redirect = {this.props.redirect}
-                            // redirectValue = {this.props.redirectValue}
+                            redirectValue = {this.props.redirectValue}
+                            
                             />
                         </Route>
                     </Switch>
-                </Router>
+              
             </div>
         );
     }

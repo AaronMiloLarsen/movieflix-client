@@ -1,34 +1,26 @@
 import React from 'react';
-import { Component } from 'react';
 
-export interface Props {
-    
-}
+import CopyrightIcon from '@material-ui/icons/Copyright';
+import { Typography } from '@material-ui/core';
+
+
  
-export interface State {
-    
-}
- 
-class Footer extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-    }
+class Footer extends React.Component {
+   
 
     footerStyle = {
         root: {
-            display: 'flex',
-            justifyContent: 'center',
-            bottom: '0px',
             width: '100%',
             height: '50px',
-            backgroundColor: 'black',
-            color: 'white',
+            
         }
     }
     render() { 
         return ( 
-            <div style = {this.footerStyle.root}>
-                <p>This is the footer!</p>
+            <div style={this.footerStyle.root}>
+                
+                <Typography style={{float:"right"}}variant='body1'><CopyrightIcon/> Copyright 2021 Movieflix</Typography>
+                
             </div>
          );
     }

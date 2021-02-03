@@ -1,66 +1,104 @@
 import React from 'react';
-import { Component } from 'react';
 
-import { Card, Button, CardContent, List } from '@material-ui/core';
+import { Card, Button, CardContent, List, Grid } from '@material-ui/core';
+
+import AddReview from '../review/AddReview'
+import ViewReviews from '../review/ViewReviews'
 
 
 
 
-
-export interface Props {
-    movie: {
-        movieTitle: "",
-        movieYear: 0,
-        movieDuration: 0,
-        movieDescription: "",
-    },
+type IndividualMovieProps = {
+    movie: any;
+    sessionToken: string;
 }
- 
-export interface State {
-    
+
+type IndividualMovieStates = {
+    addReview: boolean;
+    viewReviews: boolean;
 }
- 
-class IndividualMovie extends React.Component<Props,{}> {
-    constructor(props: Props) {
+
+class IndividualMovie extends React.Component<IndividualMovieProps, IndividualMovieStates> {
+    constructor(props: IndividualMovieProps) {
         super(props);
-        this.state = { };
+        this.state = {
+            addReview: false,
+            viewReviews: false
+        };
+    }
+
+    addReviewOn = () => {
+        this.setState({ addReview: true })
+    }
+
+    addReviewOff = () => {
+        this.setState({ addReview: false })
+    }
+
+    viewReviewsOn = () => {
+        this.setState({ viewReviews: true })
+    }
+
+    viewReviewsOff = () => {
+        this.setState({ viewReviews: false })
     }
 
     style = {
         root: {
-            color: "green",
-            backgroundColor: 'black',
-            width: '100px',
-            height: '100px',
+            width: '300px',
+
         }
     }
-                //WANT THIS ELEMENT TO BE MAPPED EVERYTIME FETCHRESULTS / GET ALL MOVIES OCCURS ON USERHOME
-    render() { 
-        return ( 
-            <div style = {this.style.root}>
-                <Card>
-                    <CardContent>
-                        <h4>Title: {this.props.movie.movieTitle}</h4>
-                    <List>
-                        <li>
-                        Year: {this.props.movie.movieYear}
-                        </li>
-                        <li>
-                            Duration: {this.props.movie.movieDuration}
-                        </li>
-                        <li>
-                            Description: {this.props.movie.movieDescription}
-                        </li>
-                    </List>
-                    </CardContent>
-                </Card>
-                    {/* <Button href={`/review/create/${this.props.movie.movieId}`}>Add Review</Button>
-                    <Button href={`/review/${this.props.movieId}`}>View Reviews</Button> */}
-            </div>
-            
-         );
+
+    render() {
+        return (
+            <>
+
+                <Grid
+                    item xs={4} >
+                    <Card style={this.style.root}>
+                        <CardContent>
+                            <h4>Title: {this.props.movie.title}</h4>
+                            <List>
+                                <li>
+                                    Year: {this.props.movie.year}
+                                </li>
+                                <li>
+                                    Duration: {this.props.movie.duration}
+                                </li>
+                                <li>
+                                    Description: {this.props.movie.description}
+                                </li>
+                            </List>
+                            <Button onClick={(e: any) => { this.addReviewOn() }}>Add Review</Button>
+                            <Button onClick={(e: any) => { this.viewReviewsOn() }}>View Reviews</Button>
+                        </CardContent>
+                    </Card>
+
+                </Grid>
+
+
+
+
+                {this.state.addReview ?
+                    <AddReview
+                        sessionToken={this.props.sessionToken}
+                        addReview={this.state.addReview}
+                        addReviewOff={this.addReviewOff}
+                        movieId={this.props.movie.id} /> : <></>}
+
+                {this.state.viewReviews ?
+                    <ViewReviews
+                        sessionToken={this.props.sessionToken}
+                        viewReviewsOff={this.viewReviewsOff}
+                        movieId={this.props.movie.id}
+                        movieTitle={this.props.movie.title}
+                    /> : <></>}
+
+            </>
+        );
     }
 
 }
- 
+
 export default IndividualMovie;

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Redirect } from 'react-router-dom'
 
-import { FormControl, InputLabel, Input, FormHelperText, ThemeProvider, Container, Button } from '@material-ui/core';
+import {Button, Container, TextField} from '@material-ui/core';
 
 
 type SignupProps = {
@@ -10,29 +10,29 @@ type SignupProps = {
     lastName: string;
     email: string;
     password: string;
-    updateToken: (newToken: string) => void;
+    updateToken: (newToken: string, userId: string) => void;
     sessionToken: any;
     setFirstName: (e: any) => any;
     setLastName: (e: any) => any;
     setEmail: (e: any) => any;
     setPassword: (e: any) => any;
-    redirect: () => void
+    redirect: () => void;
+    redirectValue: string
 }
 
 type SignupStates = {
     updateToken: (newToken: string) => void;
-    redirect: null | string;
+    redirectValue: null | string;
+    hidden: boolean
 }
 
-
-//fetch then returns object interface
-
-class Signup extends React.Component<SignupProps, SignupStates, {redirect: null | string}> {
+class Signup extends React.Component<SignupProps, SignupStates> {
     constructor(props: SignupProps) {
         super(props);
         this.state = {
             updateToken: (any) => any,
-            redirect: null
+            redirectValue: null,
+            hidden:true
         }
     }
 
@@ -54,9 +54,9 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirect: null 
         })
         .then((res) => {
             if (res.status === 200) {
-              alert("Signup Successful!")
+              console.log("Signup Successful!")
             } else {
-              alert("Signup Failed!");
+              console.log("Signup Failed!");
             }
             console.log(res)
             return res.json();
@@ -64,55 +64,63 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirect: null 
         })
         .then((data) => {
                 console.log(data)
-                this.props.updateToken(data.sessionToken)
-                this.props.redirect();
-                // this.setState({redirect: '/userhome'})
+                this.props.updateToken(data.sessionToken, data.user.id)
+                this.setState({redirectValue: '/userhome'})
             })
     };
+
+    toggleShow = () => {
+        this.setState({hidden: !this.state.hidden})
+    }
     
 
     render() {
-        if (this.state.redirect){
-            return <Redirect to = {this.state.redirect} />
+        if (this.state.redirectValue){
+            return <Redirect to = {this.state.redirectValue} />
         }
         return (
             <div>
                 <Container maxWidth="sm">
                     <h3>Signup</h3>
                     <form onSubmit = {this.handleSubmit}>
-                        <label htmlFor="firstName">First Name:</label>
+                        
                         <br />
-                        <input 
+                        <TextField
+                            label="First Name" 
                             id="firstName"
                             className='firstName'
                             onChange={(e) => this.props.setFirstName(e.target.value)} 
                             value={this.props.firstName}/>
                         <br />
-                        <label htmlFor="lastName">Last Name:</label>
+                        
                         <br />
-                        <input
+                        <TextField
+                            label="Last Name" 
                             id="lastName" 
                             className='lastName' 
                             onChange={(e) => this.props.setLastName(e.target.value)} 
                             value={this.props.lastName}/>
                         <br />
-                        <label htmlFor="email">Email:</label>
+                        
                         <br />
-                        <input
+                        <TextField
+                            label="Email"  
                             id="email" 
                             className='email' 
                             onChange={(e) => this.props.setEmail(e.target.value)} 
                             value={this.props.email}/>
                         <br />
-                        <label htmlFor="password">Password:</label>
+                        
                         <br />
-                        <input
+                        <TextField
+                            type={this.state.hidden ? 'password' : 'text'}
+                            label="Password" 
                             id="password"  
                             className='password' 
                             onChange={(e) => this.props.setPassword(e.target.value)} 
                             value={this.props.password}/>
                         <br />
-                        <input type="submit" value="Submit" />
+                        <Button type="submit" value="Submit">Submit </Button>
                     </form> 
                 </Container>
             </div>
@@ -121,47 +129,3 @@ class Signup extends React.Component<SignupProps, SignupStates, {redirect: null 
 }
 
 export default Signup;
-
-
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="firstName">First Name</InputLabel>
-                    //     <Input 
-                    //     id="firstName"
-                    //     className='firstName'
-                    //     onChange={(e) => this.props.setFirstName(e.target.value)} 
-                    //     value={this.props.firstName} />
-                    // </FormControl >
-                    // <br />
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="lastName">Last Name</InputLabel>
-                    //     <Input 
-                    //     id="lastName" 
-                    //     className='lastName' 
-                    //     onChange={(e) => this.props.setLastName(e.target.value)} 
-                    //     value={this.props.lastName} />
-                    // </FormControl>
-                    // <br />
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="email">Email Address</InputLabel>
-                    //     <Input 
-                    //     id="email" 
-                    //     aria-describedby="my-helper-text" 
-                    //     className='email' 
-                    //     onChange={(e) => this.props.setEmail(e.target.value)} 
-                    //     value={this.props.email} />
-                    //     <FormHelperText id="my-helper-text">We'll never share your email.
-                    //     </FormHelperText>
-                    // </FormControl >
-                    // <br />
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="password">Password</InputLabel>
-                    //     <Input 
-                    //     id="password" 
-                    //     aria-describedby="my-helper-text" 
-                    //     className='password' 
-                    //     onChange={(e) => this.props.setPassword(e.target.value)} 
-                    //     value={this.props.password} />
-                    //     <FormHelperText id="my-helper-text"> Don't forget this!
-                    //     </FormHelperText>
-                    //     <Button type="submit" variant="contained" color="secondary" >Signup</Button>
-                    // </FormControl>
