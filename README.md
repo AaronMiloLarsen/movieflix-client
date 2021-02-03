@@ -10,6 +10,7 @@ This is a movie review app that allows for full CRUD functionalty using React wi
 PLANS FOR BETA:
 
 1.Incorporate a ban function for admins in case of trouble makers.
+
 2. Incorporate API's for movie databases as well as make use of facial recognition API's to allow users to post photo's capturing their reaction to just finiishing a movie!
 
 Thanks for stopping by! See you for the beta!
