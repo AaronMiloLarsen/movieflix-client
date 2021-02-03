@@ -64,9 +64,6 @@ class ViewComments extends React.Component<ViewCommentsProps, ViewCommentsStates
     }
 
 
-   
-        // console.log(this.state.reviews)
-
 
     style = {
         dialog: {

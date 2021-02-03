@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Menu, MenuItem } from '@material-ui/core'
+import { Button, Grid, Menu, MenuItem } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { Redirect } from 'react-router-dom';
@@ -8,8 +8,6 @@ type HeaderProps = {
     clearToken: () => void;
     sessionToken: string;
     redirectValue: string;
-    // redirectHome: (value:any) => void
-    // adminChecker: () => void
 }
  
 type HeaderStates = {
@@ -41,7 +39,7 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
 
     headerStyle = {
         root: {
-            width: '100%',
+            width: '100vw',
             display: 'flex',
             height: '100px',
             backgroundColor: 'black',
@@ -50,7 +48,7 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
             alignItems: 'center'
         },
         icon : {
-            color:'green',
+            color:'orange',
             height: '50px',
             width: '50px'
         }
@@ -59,25 +57,31 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
     
     render() { 
         return (  
-            <div style={this.headerStyle.root}>
+            <Grid
+            justify="center"
+            alignItems="center"
+            style={this.headerStyle.root}>
+                <div>
                 <h1> MovieFlix! </h1>
-                <Button aria-controls="fade-menu" aria-haspopup="true" onClick={(e)=> this.state.setOpen(!this.state.open)}>
-                <MenuIcon style={this.headerStyle.icon} />
-                </Button>
-                {this.props.sessionToken ? 
-                <Menu
-                id="fade-menu"
-                keepMounted
-                open={this.state.open}
+                </div>
+                <div>
+                    <Button aria-controls="fade-menu" aria-haspopup="true" onClick={(e)=> this.state.setOpen(!this.state.open)}>
+                    <MenuIcon style={this.headerStyle.icon} />
+                    </Button>
+                    {this.props.sessionToken ? 
+                    <Menu
+                    id="fade-menu"
+                    keepMounted
+                    open={this.state.open}
                 
                 >
-                <MenuItem ><Button href="/userhome">Home</Button></MenuItem>
-                <MenuItem ><Button href="/profile">My Profile</Button></MenuItem>
-                <MenuItem> <Button href="/admin"> Admin </Button>  </MenuItem>
-                <MenuItem> <Button href="/about"> About </Button>  </MenuItem>
-                <MenuItem ><Button  onClick={this.props.clearToken} href="/">Logout</Button></MenuItem>
-                <MenuItem ><Button><CloseIcon  onClick={(e)=> this.setState({open:false})}/></Button></MenuItem>
-                </Menu>
+                    <MenuItem ><Button href="/userhome">Home</Button></MenuItem>
+                    <MenuItem ><Button href="/profile">My Profile</Button></MenuItem>
+                    <MenuItem> <Button href="/admin"> Admin </Button>  </MenuItem>
+                    <MenuItem> <Button href="/about"> About </Button>  </MenuItem>
+                    <MenuItem ><Button  onClick={this.props.clearToken} href="/">Logout</Button></MenuItem>
+                    <MenuItem ><Button><CloseIcon  onClick={(e)=> this.setState({open:false})}/></Button></MenuItem>
+                    </Menu>
                 :<></>}
 
                 {!this.props.sessionToken ? 
@@ -89,6 +93,7 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
                     <MenuItem ><Button><CloseIcon  onClick={(e)=> this.setState({open:false})}/></Button></MenuItem>
                     </Menu> : <></>}
             </div>
+            </Grid>
         );
     }
 }

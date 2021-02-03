@@ -139,25 +139,6 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
             this.setState({addMovie: false})
         }
 
-        // adminChecker = () => {
-        //     if (localStorage.getItem('admin')) {
-        //        this.setState({redirectValue: '/admin'})
-        //        return <Redirect to = {this.state.redirectValue}/>
-        //     }
-        //     else {
-        //       alert('Silly User! You arent an Admin!')
-        //     }
-        //   }
-
-        // userHomeStyle =  {
-        //     root: {
-        //         display: 'flex',
-        //         alignItems: 'center',
-        //         backgroundColor: 'black',
-        //         width: '80%',
-        //         height: '80%'
-        //     }
-        // }
 
 
     render() { 
@@ -166,7 +147,7 @@ class UserHome extends React.Component<UserHomeProps, UserHomeStates> {
             <>
                 
             <h3>Welcome User</h3>
-                <Grid container
+                <Grid xs={3}
                     direction="row"
                     justify="flex-start"
                     alignItems="center">

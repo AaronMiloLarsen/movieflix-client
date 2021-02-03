@@ -9,10 +9,9 @@ class Footer extends React.Component {
 
     footerStyle = {
         root: {
-            display: 'fixed',
+            display: 'flex',
             justifyContent: 'right',
-            bottom: '0',
-            width: '100%',
+            width: '100vw',
             height: '50px',
             backgroundColor: 'black',
             color: 'white',
@@ -22,7 +21,7 @@ class Footer extends React.Component {
         return ( 
             <div style = {this.footerStyle.root}>
                 <div>
-                <p><CopyrightIcon/> Copywright 2021 Movieflix</p>
+                <p><CopyrightIcon/> Copyright 2021 Movieflix</p>
                 </div>
             </div>
          );

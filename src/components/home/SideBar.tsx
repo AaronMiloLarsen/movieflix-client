@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 interface Props {
-  // clearToken = (e:EventListener) => void,
+  
 }
  
 export interface State {
@@ -52,6 +52,5 @@ class SideBar extends React.Component<Props, {}> {
     }
 }
  
-// export default withStyles(styles, {withTheme: true }) (SideBar);
 
 export default SideBar;

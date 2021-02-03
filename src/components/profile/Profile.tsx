@@ -5,7 +5,7 @@ import MyMovies from '../profile/MyMovies'
 import MyReviews from '../profile/MyReviews'
 import MyComments from '../profile/MyComments'
 
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup, Grid } from '@material-ui/core';
 
 
 type ProfileProps = {
@@ -14,7 +14,6 @@ type ProfileProps = {
 }
 
 type ProfileStates = {
-    // myMovies: any;
     myReviews: any;
     myComments: any;
     userId: string;
@@ -37,10 +36,26 @@ class Profile extends React.Component<ProfileProps, ProfileStates> {
         };
     }
 
+
+    welcomeStyle = {
+        root: {
+            display:'flex',
+            width: '100vw',
+            margin: 'auto',
+            height: '100%',
+        }
+    }
+
+
     render() {
 
         return (
-            <div style={{ alignItems: 'center' }}>
+            <Grid
+            style={this.welcomeStyle.root}
+            className="homepage"
+            alignContent="center"
+            alignItems="center"
+            justify="center">
                 <ButtonGroup>
                     <Button onClick={() => this.setState({
                         openMovies:true, 
@@ -61,26 +76,20 @@ class Profile extends React.Component<ProfileProps, ProfileStates> {
                 </ButtonGroup>
 
             {this.state.openMovies ? <MyMovies
-            // myMovies={this.state.myMovies}
-            // fetchMyMovies={this.fetchMyMovies}
             sessionToken={this.props.sessionToken}
             userId={this.props.userId}
              /> : <></>}
 
             {this.state.openReviews ? <MyReviews
-            // myReviews={this.state.myReviews}
-            // fetchMyReviews={this.fetchMyReviews}
             sessionToken={this.props.sessionToken}
             userId={this.props.userId}
              /> : <></>}
 
             {this.state.openComments ? <MyComments
-            // myComments={this.state.myComments}
-            // fetchMyComments={this.fetchMyComments}
             sessionToken={this.props.sessionToken}
              /> : <></>}
 
-            </div>
+            </Grid>
         )
     }
 }

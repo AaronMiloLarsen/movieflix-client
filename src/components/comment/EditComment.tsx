@@ -15,8 +15,6 @@ type editCommentStates = {
     open: boolean;
     comment: string,
     author: string,
-    // addComment: boolean,
-    // currentComment: any;
     setComment: (e: any) => any;
     setAuthor: (e:any) => any;
 }
@@ -28,8 +26,6 @@ class EditComment extends React.Component<editCommentProps, editCommentStates> {
             open: true,
             comment: '',
             author: '',
-            // addComment: true,
-            // currentComment: '',
             setComment: (e) => {
                 this.setState({
                   comment: e
@@ -42,12 +38,6 @@ class EditComment extends React.Component<editCommentProps, editCommentStates> {
             },
         };
     }
-
-
-componentDidMount() {
-    // this.fetchCurrentComment()
-    // console.log(this.props.CommentId)
-}
 
 
 
@@ -84,33 +74,6 @@ componentDidMount() {
         this.props.editCommentOff()
     }
 
-    //  fetchCurrentMovie = async () => {
-    //     await fetch(`http://localhost:3500/movie/${this.props.movieId}`, {
-    //         method: 'GET',
-    //         headers: new Headers({
-    //             'Content-Type': 'application/json',
-    //             'Authorization': this.props.sessionToken
-    //         })
-    //     }) .then((movie) => movie.json())
-    //        .then((movieData) => {
-    //             this.setState({
-    //                 currentMovie: movieData
-    //             })
-    //             console.log(movieData)
-    //             console.log(this.state.currentMovie.title)
-    //             this.setState({open : true})
-    //        }) .catch (
-    //            (err) => console.log(err)
-    //        )
-    // }
-
-
-
-    // dialogStyle = {
-    //     root: {
-    //         alignItems:'center'
-    //     }
-    // }
     render() { 
         return (  
             <Dialog open={this.state.open} maxWidth='md' fullWidth >
@@ -132,7 +95,6 @@ componentDidMount() {
                     margin="dense"
                     id="author"
                     label="Your Name"
-                    // type="email"
                     onChange={(e)=> this.state.setAuthor(e.target.value)}
                       />
                 </DialogContent>

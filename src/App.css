@@ -1,8 +1,9 @@
 .app {
    width: 100vh;
-   height: 100vh;
+   height: 100%;
    margin: 5px;
-   padding: 5px
+   padding: 5px;
+   background-color: lightgray;
     
 
 }

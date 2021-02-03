@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Redirect } from 'react-router-dom'
 
-import {Container} from '@material-ui/core';
+import {Button, Container, TextField} from '@material-ui/core';
 
 
 type SignupProps = {
@@ -87,40 +87,44 @@ class Signup extends React.Component<SignupProps, SignupStates> {
                 <Container maxWidth="sm">
                     <h3>Signup</h3>
                     <form onSubmit = {this.handleSubmit}>
-                        <label htmlFor="firstName">First Name:</label>
+                        
                         <br />
-                        <input 
+                        <TextField
+                            label="First Name" 
                             id="firstName"
                             className='firstName'
                             onChange={(e) => this.props.setFirstName(e.target.value)} 
                             value={this.props.firstName}/>
                         <br />
-                        <label htmlFor="lastName">Last Name:</label>
+                        
                         <br />
-                        <input
+                        <TextField
+                            label="Last Name" 
                             id="lastName" 
                             className='lastName' 
                             onChange={(e) => this.props.setLastName(e.target.value)} 
                             value={this.props.lastName}/>
                         <br />
-                        <label htmlFor="email">Email:</label>
+                        
                         <br />
-                        <input
+                        <TextField
+                            label="Email"  
                             id="email" 
                             className='email' 
                             onChange={(e) => this.props.setEmail(e.target.value)} 
                             value={this.props.email}/>
                         <br />
-                        <label htmlFor="password">Password:</label>
+                        
                         <br />
-                        <input
+                        <TextField
                             type={this.state.hidden ? 'password' : 'text'}
+                            label="Password" 
                             id="password"  
                             className='password' 
                             onChange={(e) => this.props.setPassword(e.target.value)} 
                             value={this.props.password}/>
                         <br />
-                        <input type="submit" value="Submit" />
+                        <Button type="submit" value="Submit">Submit </Button>
                     </form> 
                 </Container>
             </div>
