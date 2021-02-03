@@ -13,56 +13,56 @@ type DeleteReviewProps = {
     myReviews: any
     reviewId: number
 }
- 
+
 type DeleteReviewStates = {
-    open:boolean
+    open: boolean
 }
- 
+
 class DeleteReview extends React.Component<DeleteReviewProps, DeleteReviewStates> {
     constructor(props: DeleteReviewProps) {
         super(props);
         this.state = {
             open: true
-         };
+        };
     }
 
-    handleDelete = (e:any) => {
-        fetch(`http://localhost:3500/review/${this.props.reviewId}`,{
-        method: 'DELETE',
-        headers: new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': this.props.sessionToken
+    handleDelete = (e: any) => {
+        fetch(`http://localhost:3500/review/${this.props.reviewId}`, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.sessionToken
+            })
         })
-    })
-    .then(response => response.json());
-    console.log('Review was deleted.');
-    this.props.deleteReviewOff()
-    this.props.fetchMyReviews();
-    }   
+            .then(response => response.json());
+        console.log('Review was deleted.');
+        this.props.deleteReviewOff()
+        this.props.fetchMyReviews();
+    }
 
     handleClose = () => {
-        this.setState({open: false})
+        this.setState({ open: false })
         this.props.deleteReviewOff()
     }
 
 
-    render() { 
-        return ( 
+    render() {
+        return (
             <>
-            <Dialog open={this.state.open}>
-                <DialogContent>Delete this Review?</DialogContent>
-                <DialogActions>
-                <Button
-                startIcon={<CancelIcon/>}
-                onClick={this.handleClose}>Cancel</Button>
-                <Button
-                startIcon={<DeleteForeverIcon/>}
-                onClick={this.handleDelete}>Delete</Button>
-                </DialogActions>
-            </Dialog>
+                <Dialog open={this.state.open}>
+                    <DialogContent>Delete this Review?</DialogContent>
+                    <DialogActions>
+                        <Button
+                            startIcon={<CancelIcon />}
+                            onClick={this.handleClose}>Cancel</Button>
+                        <Button
+                            startIcon={<DeleteForeverIcon />}
+                            onClick={this.handleDelete}>Delete</Button>
+                    </DialogActions>
+                </Dialog>
             </>
-         );
+        );
     }
 }
- 
+
 export default DeleteReview;

@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, TextField } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 import React from 'react'
 
 
@@ -8,17 +8,17 @@ type editCommentProps = {
     sessionToken: string;
     fetchMyComments: () => void;
     myComments: any;
-    commentId:number
+    commentId: number
 }
- 
+
 type editCommentStates = {
     open: boolean;
     comment: string,
     author: string,
     setComment: (e: any) => any;
-    setAuthor: (e:any) => any;
+    setAuthor: (e: any) => any;
 }
- 
+
 class EditComment extends React.Component<editCommentProps, editCommentStates> {
     constructor(props: editCommentProps) {
         super(props);
@@ -28,12 +28,12 @@ class EditComment extends React.Component<editCommentProps, editCommentStates> {
             author: '',
             setComment: (e) => {
                 this.setState({
-                  comment: e
+                    comment: e
                 })
             },
             setAuthor: (e) => {
                 this.setState({
-                  author: e
+                    author: e
                 })
             },
         };
@@ -41,8 +41,8 @@ class EditComment extends React.Component<editCommentProps, editCommentStates> {
 
 
 
-    handleSubmit = (e:any) => {
-        
+    handleSubmit = (e: any) => {
+
         console.log(this.props.commentId)
         e.preventDefault();
         fetch(`http://localhost:3500/comment/${this.props.commentId}`, {
@@ -65,46 +65,46 @@ class EditComment extends React.Component<editCommentProps, editCommentStates> {
                 this.state.setAuthor('')
                 this.props.fetchMyComments()
                 this.handleClose()
-    
+
             })
     }
-    
+
     handleClose = () => {
-        this.setState({open: false})
+        this.setState({ open: false })
         this.props.editCommentOff()
     }
 
-    render() { 
-        return (  
+    render() {
+        return (
             <Dialog open={this.state.open} maxWidth='md' fullWidth >
                 <DialogTitle>Edit Your Comment</DialogTitle>
                 <DialogContent>
-                    <TextField 
-                    autoFocus
-                    margin="dense"
-                    id="comment"
-                    label="Comment"
-                    // type="email"
-                    fullWidth
-                    onChange={(e)=> this.state.setComment(e.target.value)}
-                      />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="comment"
+                        label="Comment"
+                        // type="email"
+                        fullWidth
+                        onChange={(e) => this.state.setComment(e.target.value)}
+                    />
                 </DialogContent>
                 <DialogContent>
-                    <TextField 
-                    
-                    margin="dense"
-                    id="author"
-                    label="Your Name"
-                    onChange={(e)=> this.state.setAuthor(e.target.value)}
-                      />
+                    <TextField
+
+                        margin="dense"
+                        id="author"
+                        label="Your Name"
+                        onChange={(e) => this.state.setAuthor(e.target.value)}
+                    />
                 </DialogContent>
-                
-                    <Button onClick={this.handleClose}>Cancel</Button>
-                    <Button type='submit' onClick={this.handleSubmit}>Confirm</Button>
-                
+
+                <Button onClick={this.handleClose}>Cancel</Button>
+                <Button type='submit' onClick={this.handleSubmit}>Confirm</Button>
+
             </Dialog>
         );
     }
 }
- 
+
 export default EditComment;

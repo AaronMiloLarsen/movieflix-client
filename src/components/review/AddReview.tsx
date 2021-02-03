@@ -8,24 +8,21 @@ type AddReviewProps = {
     addReview: boolean
     addReviewOff: () => void
     movieId: number
-    // fetchMovies: () => void
-    // addMovieOff: () => void
 }
- 
+
 type AddReviewStates = {
- open: boolean;
- title: string,
- emotion: string,
- review: string,
- author: string,
- addReview: boolean,
- setTitle: (e: any) => any;
- setEmotion: (e:any) => any;
- setReview: (e:any) => any;
- setAuthor: (e:any) => any
-//  onClose: (e:EventListener) => void;
+    open: boolean;
+    title: string,
+    emotion: string,
+    review: string,
+    author: string,
+    addReview: boolean,
+    setTitle: (e: any) => any;
+    setEmotion: (e: any) => any;
+    setReview: (e: any) => any;
+    setAuthor: (e: any) => any
 }
- 
+
 class AddReview extends React.Component<AddReviewProps, AddReviewStates> {
 
     constructor(props: AddReviewProps) {
@@ -37,83 +34,78 @@ class AddReview extends React.Component<AddReviewProps, AddReviewStates> {
             review: '',
             author: '',
             addReview: true,
-            // onClose: (e:EventListener) => void;
             setTitle: (e) => {
                 this.setState({
-                  title: e
+                    title: e
                 })
             },
             setEmotion: (e) => {
                 this.setState({
-                  emotion: e
+                    emotion: e
                 })
             },
             setReview: (e) => {
                 this.setState({
-                  review: e
+                    review: e
                 })
             },
             setAuthor: (e) => {
                 this.setState({
-                  author: e
+                    author: e
                 })
             },
         };
     }
 
-handleSubmit = (e:any) => {
-    e.preventDefault();
-    console.log(this.props.movieId)
-    fetch(`http://localhost:3500/review/create`, {
-        method: 'POST',
-        body: JSON.stringify({
-            review: {
-                title: this.state.title,
-                emotion: this.state.emotion,
-                review: this.state.review,
-                author: this.state.author,
-                movieId: this.props.movieId
-            }
-        }),
-        headers: new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': this.props.sessionToken
+    handleSubmit = (e: any) => {
+        e.preventDefault();
+        console.log(this.props.movieId)
+        fetch(`http://localhost:3500/review/create`, {
+            method: 'POST',
+            body: JSON.stringify({
+                review: {
+                    title: this.state.title,
+                    emotion: this.state.emotion,
+                    review: this.state.review,
+                    author: this.state.author,
+                    movieId: this.props.movieId
+                }
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.sessionToken
+            })
         })
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data)
-            this.state.setTitle('')
-            this.state.setEmotion('')
-            this.state.setReview('')
-            this.state.setAuthor('')
-            // this.props.fetchMovies()
-            this.handleClose()
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                this.state.setTitle('')
+                this.state.setEmotion('')
+                this.state.setReview('')
+                this.state.setAuthor('')
+                this.handleClose()
 
-        })
-}
-   
+            })
+    }
+
 
 
     handleOpen = () => {
-        this.setState({open:true})
+        this.setState({ open: true })
     }
     handleClose = () => {
-        this.setState({open:false})
-        this.setState({addReview : false})
+        this.setState({ open: false })
+        this.setState({ addReview: false })
         this.props.addReviewOff()
     }
 
     componentDidMount() {
-        this.setState({open:true})
+        this.setState({ open: true })
     }
 
-    // addMovieOff = () => {
-        
-    // }
     dialogStyle = {
         root: {
-            alignItems:'center',
+            alignItems: 'center',
             minWidth: '500px',
             width: '800px',
             height: '800px'
@@ -121,53 +113,49 @@ handleSubmit = (e:any) => {
     }
 
 
-    render() { 
+    render() {
 
-        return (  
+        return (
 
-            <Dialog open={this.state.open} 
-            maxWidth='lg'
-            fullWidth
+            <Dialog open={this.state.open}
+                maxWidth='lg'
+                fullWidth
             >
                 <DialogTitle>Add A Review!</DialogTitle>
                 <DialogContent >
                     <FormControl >
                         <InputLabel htmlFor='title'>Title</InputLabel>
-                        <Input id='title' onChange={(e)=> this.state.setTitle(e.target.value)}/>
+                        <Input id='title' onChange={(e) => this.state.setTitle(e.target.value)} />
                     </FormControl>
-                    </DialogContent>
-                    <DialogContent >
+                </DialogContent>
+                <DialogContent >
                     <FormControl>
                         <InputLabel htmlFor='emotion'>Emotion</InputLabel>
-                        <Input id='emotion'onChange={(e)=> this.state.setEmotion(e.target.value)}/>
+                        <Input id='emotion' onChange={(e) => this.state.setEmotion(e.target.value)} />
                     </FormControl>
-                    </DialogContent>
-                    <DialogContent >
-                    {/* <FormControl> */}
-                        {/* <InputLabel htmlFor='review'>Review</InputLabel> */}
-                        <TextField 
+                </DialogContent>
+                <DialogContent >
+                    <TextField
                         id="standard-multiline-flexible"
                         label="Review"
                         multiline
                         rowsMax={8}
                         fullWidth
-                        // id='review'
-                        onChange={(e)=> this.state.setReview(e.target.value)}/>
-                    {/* </FormControl> */}
-                    </DialogContent>
-                    <DialogContent >
+                        onChange={(e) => this.state.setReview(e.target.value)} />
+                </DialogContent>
+                <DialogContent >
                     <FormControl>
                         <InputLabel htmlFor='author'>Your Name:</InputLabel>
-                        <Input id='author'onChange={(e)=> this.state.setAuthor(e.target.value)}/>
+                        <Input id='author' onChange={(e) => this.state.setAuthor(e.target.value)} />
                     </FormControl>
-                    </DialogContent>
-                    <DialogContent >
-                    <Button onClick ={this.handleClose}>Cancel</Button>
+                </DialogContent>
+                <DialogContent >
+                    <Button onClick={this.handleClose}>Cancel</Button>
                     <Button type='submit' onClick={this.handleSubmit}>Add Review</Button>
                 </DialogContent>
             </Dialog>
         );
     }
 }
- 
+
 export default AddReview;

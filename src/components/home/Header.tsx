@@ -1,19 +1,20 @@
 import React from 'react'
 import { Button, Grid, Menu, MenuItem } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuOutlinedIcon from '@material-ui/icons/MenuOutlined';
 import CloseIcon from '@material-ui/icons/Close';
-import { Redirect } from 'react-router-dom';
+import Logo from '../../assets/MFlogo3.png'
 
 type HeaderProps = {
     clearToken: () => void;
     sessionToken: string;
     redirectValue: string;
 }
- 
+
 type HeaderStates = {
     open: boolean;
-    setOpen: (e:any) => void;
+    setOpen: (e: any) => void;
     redirectValue: string
+    anchor: null | HTMLElement
 }
 
 
@@ -22,100 +23,96 @@ class Header extends React.Component<HeaderProps, HeaderStates> {
         super(props);
         this.state = {
             open: false,
-            setOpen: (e:any) => {
+            setOpen: (e: any) => {
                 this.setState({
-                  open: e })
+                    open: e
+                })
             },
             redirectValue: '',
+            anchor: null
         }
 
+    }
+
+    handleClose = () => {
+        this.setState({ anchor: null })
     }
 
     handleLogout = () => {
         this.props.clearToken()
-     
+
     }
+
+    handleAnchor = (event: React.MouseEvent<HTMLButtonElement>) => {
+        this.setState({ anchor: event.currentTarget });
+
+    };
 
 
     headerStyle = {
-        root: {
-            width: '100vw',
-            display: 'flex',
-            height: '100px',
-            backgroundColor: 'black',
-            padding: '10px',
-            color: 'white',
-            alignItems: 'center'
-        },
-        icon : {
-            color:'orange',
+        icon: {
+            color: 'fe6a3e',
             height: '50px',
-            width: '50px'
+            width: '50px',
+            border: '5px'
         }
     }
 
-    
-    render() { 
-        return (  
-            <Grid
-            justify="center"
-            alignItems="center"
-            style={this.headerStyle.root}>
-                <div>
-                <h1> MovieFlix! </h1>
-                </div>
-                <div>
-                    <Button aria-controls="fade-menu" aria-haspopup="true" onClick={(e)=> this.state.setOpen(!this.state.open)}>
-                    <MenuIcon style={this.headerStyle.icon} />
-                    </Button>
-                    {this.props.sessionToken ? 
-                    <Menu
-                    id="fade-menu"
-                    keepMounted
-                    open={this.state.open}
-                
-                >
-                    <MenuItem ><Button href="/userhome">Home</Button></MenuItem>
-                    <MenuItem ><Button href="/profile">My Profile</Button></MenuItem>
-                    <MenuItem> <Button href="/admin"> Admin </Button>  </MenuItem>
-                    <MenuItem> <Button href="/about"> About </Button>  </MenuItem>
-                    <MenuItem ><Button  onClick={this.props.clearToken} href="/">Logout</Button></MenuItem>
-                    <MenuItem ><Button><CloseIcon  onClick={(e)=> this.setState({open:false})}/></Button></MenuItem>
-                    </Menu>
-                :<></>}
 
-                {!this.props.sessionToken ? 
-                <Menu
-                id="fade-menu"
-                keepMounted
-                open={this.state.open}>
-                    <MenuItem><Button href="/about"> About </Button></MenuItem>
-                    <MenuItem ><Button><CloseIcon  onClick={(e)=> this.setState({open:false})}/></Button></MenuItem>
-                    </Menu> : <></>}
-            </div>
+    render() {
+        return (
+            <Grid container justify="space-between" alignItems="center" style={{ backgroundColor: "darkgray" }}>
+                <Grid item xs={4}>
+                    <img src={Logo} alt="Man holding phone" width='auto' height='100' />
+                </Grid>
+                <Grid item xs={4}>
+
+                </Grid>
+                <Grid item xs={4}>
+                    <Button
+                        style={{ float: "right", marginRight: 20, }}
+                        aria-controls="fade-menu"
+                        aria-haspopup="true"
+                        onClick={this.handleAnchor}>
+                        <MenuOutlinedIcon style={this.headerStyle.icon} />
+                    </Button>
+                    {this.props.sessionToken ?
+                        <Menu
+                            id="fade-menu"
+                            keepMounted
+                            anchorEl={this.state.anchor}
+                            open={Boolean(this.state.anchor)}
+                            onClose={this.handleClose}
+
+                        >
+                            <MenuItem ><Button href="/userhome">Home</Button></MenuItem>
+                            <MenuItem ><Button href="/profile">My Profile</Button></MenuItem>
+                            <MenuItem> <Button href="/admin"> Admin </Button>  </MenuItem>
+                            <MenuItem> <Button href="/about"> About </Button>  </MenuItem>
+                            <MenuItem ><Button onClick={this.props.clearToken} href="/">Logout</Button></MenuItem>
+                            <MenuItem ><Button><CloseIcon onClick={(e) => this.setState({ anchor: null })} /></Button></MenuItem>
+                        </Menu>
+                        : <></>}
+
+                    {!this.props.sessionToken ?
+                        <Menu
+                            id="fade-menu"
+                            keepMounted
+                            anchorEl={this.state.anchor}
+                            open={Boolean(this.state.anchor)}
+                            onClose={this.handleClose}
+                        >
+                            <MenuItem><Button href="/"> Home </Button></MenuItem>
+                            <MenuItem><Button href="/user/login"> Login </Button></MenuItem>
+                            <MenuItem><Button href="/user/signup"> Signup </Button></MenuItem>
+                            <MenuItem><Button href="/about"> About </Button></MenuItem>
+                            <MenuItem ><Button><CloseIcon onClick={(e) => this.setState({ anchor: null })} /></Button></MenuItem>
+                        </Menu> : <></>}
+                </Grid>
+
             </Grid>
         );
     }
 }
- 
-export default Header;
 
-// export interface Props {
-    
-// }
- 
-// export interface State {
-    
-// }
- 
-// class  extends React.Component<Props, State> {
-//     constructor(props: Props) {
-//         super(props);
-//         this.state = { :  };
-//     }
-//     render() { 
-//         return (  );
-//     }
-// }
- 
-// export default ;
+export default Header;

@@ -1,8 +1,7 @@
 import React from 'react'
-import {Button, Container, Grid, TextField} from '@material-ui/core';
+import {Button, Grid, TextField} from '@material-ui/core';
 
 import { Redirect, } from 'react-router-dom'
-import { exit } from 'process';
 
 type LoginProps = {
     email: string;
@@ -45,7 +44,7 @@ class Login extends React.Component<LoginProps, LoginStates > {
                 'Content-Type': 'application/json'
             })
         })
-            // .then((res) => res.json())
+            
             .then((res) => {
                 if (res.status === 200) {
                   console.log("Login successful.")
@@ -124,29 +123,3 @@ class Login extends React.Component<LoginProps, LoginStates > {
 }
  
 export default Login;
-
-{/* <FormControl onSubmit={this.handleSubmit}>
-                        <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <Input 
-                        id="email" 
-                        aria-describedby="my-helper-text" 
-                        className='email' 
-                        onChange={(e) => this.props.setEmail(e.target.value)} 
-                        value={this.props.email} />
-                        <FormHelperText id="my-helper-text">We'll never share your email.
-                        </FormHelperText>
-                    </FormControl >
-                    <br />
-                    <FormControl onSubmit={this.handleSubmit}>
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input 
-                        id="password" 
-                        aria-describedby="my-helper-text" 
-                        className='password' 
-                        onChange={(e) => this.props.setPassword(e.target.value)} 
-                        value={this.props.password} />
-                        <FormHelperText id="my-helper-text"> Don't forget this!
-                        </FormHelperText>
-                    </FormControl>
-                        <br />
-                        <Button type="submit" variant="contained" color="secondary" >Signup</Button> */}

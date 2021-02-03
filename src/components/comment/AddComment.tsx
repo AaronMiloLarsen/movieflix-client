@@ -63,7 +63,6 @@ class AddComment extends React.Component<AddCommentProps, AddCommentStates> {
                 console.log(data)
                 this.state.setComment('')
                 this.state.setAuthor('')
-                // this.props.fetchMovies ()
                 this.handleClose()
             })
         }
@@ -86,7 +85,6 @@ class AddComment extends React.Component<AddCommentProps, AddCommentStates> {
                     margin="dense"
                     id="comment"
                     label="Comment"
-                    // type="email"
                     fullWidth
                     onChange={(e:any)=> this.state.setComment(e.target.value)}
                       />
@@ -97,7 +95,6 @@ class AddComment extends React.Component<AddCommentProps, AddCommentStates> {
                     margin="dense"
                     id="author"
                     label="Your Name"
-                    // type="email"
                     onChange={(e:any)=> this.state.setAuthor(e.target.value)}
                       />
                 </DialogContent>

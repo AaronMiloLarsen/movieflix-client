@@ -1,6 +1,7 @@
 import React from 'react';
 
 import CopyrightIcon from '@material-ui/icons/Copyright';
+import { Typography } from '@material-ui/core';
 
 
  
@@ -9,20 +10,17 @@ class Footer extends React.Component {
 
     footerStyle = {
         root: {
-            display: 'flex',
-            justifyContent: 'right',
-            width: '100vw',
+            width: '100%',
             height: '50px',
-            backgroundColor: 'black',
-            color: 'white',
+            
         }
     }
     render() { 
         return ( 
-            <div style = {this.footerStyle.root}>
-                <div>
-                <p><CopyrightIcon/> Copyright 2021 Movieflix</p>
-                </div>
+            <div style={this.footerStyle.root}>
+                
+                <Typography style={{float:"right"}}variant='body1'><CopyrightIcon/> Copyright 2021 Movieflix</Typography>
+                
             </div>
          );
     }

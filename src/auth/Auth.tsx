@@ -11,7 +11,7 @@ type AuthProps = {
   updateToken: (newToken:string, userId: string) => void;
   redirect: () => void,
   redirectValue: string,
-  // adminChecker: (adminData:string) => void
+  
 
 }
 
@@ -21,7 +21,6 @@ type AuthStates = {
     email: string;
     password: string;
     sessionToken: any;
-    // updateToken: (newToken:string) => void;
     getToken: any;
     setFirstName: (e: any) => any;
     setLastName: (e: any) => any;
@@ -85,13 +84,10 @@ class Auth extends React.Component< AuthProps, AuthStates> {
                             updateToken = {this.props.updateToken}
                             redirect = {this.props.redirect}
                             redirectValue={this.props.redirectValue}
-                            // adminChecker={this.props.adminChecker}
+                            
                             />
                         </Route>
-                    {/* </Switch>
-                </Router>
-                <Router>
-                    <Switch> */}
+              
                         <Route exact path='/user/signup'>
                             <Signup 
                             firstName = {this.state.firstName}

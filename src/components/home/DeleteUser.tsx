@@ -13,57 +13,57 @@ type DeleteUserProps = {
     users: any
     userId: number
 }
- 
+
 type DeleteUserStates = {
-    open:boolean
+    open: boolean
 }
- 
+
 class DeleteUser extends React.Component<DeleteUserProps, DeleteUserStates> {
     constructor(props: DeleteUserProps) {
         super(props);
         this.state = {
             open: true
-         };
+        };
     }
 
-    handleDelete = (e:any) => {
-        fetch(`http://localhost:3500/user/${this.props.userId}`,{
-        method: 'DELETE',
-        headers: new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': this.props.sessionToken
+    handleDelete = (e: any) => {
+        fetch(`http://localhost:3500/user/${this.props.userId}`, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.sessionToken
+            })
         })
-    })
-    .then(response => response.json());
-    console.log('User was deleted.');
-    this.setState({open: false})
-    this.props.deleteUserOff()
-    this.props.fetchUsers();
-    }   
+            .then(response => response.json());
+        console.log('User was deleted.');
+        this.setState({ open: false })
+        this.props.deleteUserOff()
+        this.props.fetchUsers();
+    }
 
     handleClose = () => {
-        this.setState({open: false})
+        this.setState({ open: false })
         this.props.deleteUserOff()
     }
 
 
-    render() { 
-        return ( 
+    render() {
+        return (
             <>
-            <Dialog open={this.state.open}>
-                <DialogContent>Delete this User?</DialogContent>
-                <DialogActions>
-                <Button
-                startIcon={<CancelIcon/>}
-                onClick={this.handleClose}>Cancel</Button>
-                <Button
-                startIcon={<DeleteForeverIcon/>}
-                onClick={this.handleDelete}>Delete</Button>
-                </DialogActions>
-            </Dialog>
+                <Dialog open={this.state.open}>
+                    <DialogContent>Delete this User?</DialogContent>
+                    <DialogActions>
+                        <Button
+                            startIcon={<CancelIcon />}
+                            onClick={this.handleClose}>Cancel</Button>
+                        <Button
+                            startIcon={<DeleteForeverIcon />}
+                            onClick={this.handleDelete}>Delete</Button>
+                    </DialogActions>
+                </Dialog>
             </>
-         );
+        );
     }
 }
- 
+
 export default DeleteUser;

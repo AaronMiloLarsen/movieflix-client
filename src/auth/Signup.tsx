@@ -26,9 +26,6 @@ type SignupStates = {
     hidden: boolean
 }
 
-
-//fetch then returns object interface
-
 class Signup extends React.Component<SignupProps, SignupStates> {
     constructor(props: SignupProps) {
         super(props);
@@ -68,7 +65,6 @@ class Signup extends React.Component<SignupProps, SignupStates> {
         .then((data) => {
                 console.log(data)
                 this.props.updateToken(data.sessionToken, data.user.id)
-                // this.props.redirect();
                 this.setState({redirectValue: '/userhome'})
             })
     };
@@ -133,47 +129,3 @@ class Signup extends React.Component<SignupProps, SignupStates> {
 }
 
 export default Signup;
-
-
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="firstName">First Name</InputLabel>
-                    //     <Input 
-                    //     id="firstName"
-                    //     className='firstName'
-                    //     onChange={(e) => this.props.setFirstName(e.target.value)} 
-                    //     value={this.props.firstName} />
-                    // </FormControl >
-                    // <br />
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="lastName">Last Name</InputLabel>
-                    //     <Input 
-                    //     id="lastName" 
-                    //     className='lastName' 
-                    //     onChange={(e) => this.props.setLastName(e.target.value)} 
-                    //     value={this.props.lastName} />
-                    // </FormControl>
-                    // <br />
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="email">Email Address</InputLabel>
-                    //     <Input 
-                    //     id="email" 
-                    //     aria-describedby="my-helper-text" 
-                    //     className='email' 
-                    //     onChange={(e) => this.props.setEmail(e.target.value)} 
-                    //     value={this.props.email} />
-                    //     <FormHelperText id="my-helper-text">We'll never share your email.
-                    //     </FormHelperText>
-                    // </FormControl >
-                    // <br />
-                    // <FormControl onSubmit={this.handleSubmit}>
-                    //     <InputLabel htmlFor="password">Password</InputLabel>
-                    //     <Input 
-                    //     id="password" 
-                    //     aria-describedby="my-helper-text" 
-                    //     className='password' 
-                    //     onChange={(e) => this.props.setPassword(e.target.value)} 
-                    //     value={this.props.password} />
-                    //     <FormHelperText id="my-helper-text"> Don't forget this!
-                    //     </FormHelperText>
-                    //     <Button type="submit" variant="contained" color="secondary" >Signup</Button>
-                    // </FormControl>
